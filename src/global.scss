@@ -24,3 +24,8 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-segment-button{
+    --background-checked: linear-gradient(to right, #2d2e87, #0083CB)!important;
+    --color-checked: white;
+  }

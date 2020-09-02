@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { AuthentificationService } from '../authentification.service';
+import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +10,24 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  segment = "accueil"
+  env = environment.pathavatar;
+  constructor(private auth: AuthentificationService, private storage: Storage, private alertController: AlertController) {
 
-  constructor() {}
+  }
+  User
+  ngOnInit() {
+    this.storage.get('currentUser').then((val) => {
+      this.User = val;
+
+    });
+  }
+
+
+
+  logout() {
+    this.auth.logout()
+  }
+
 
 }
