@@ -5,6 +5,9 @@
   background: url('../../assets/icon/home/header.png') center center no-repeat;
   background-size: cover;
 }
+ion-content{
+  --background: ghostwhite;
+}
 
 .profile {
   position: absolute;

@@ -1,0 +1,273 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title style="color:white;font-family: Roboto;
+        font-weight: 700;
+        line-height: 58px;">
+      {{this?.title}}
+    </ion-title>
+    <ng-container *ngIf="this?.title=='Site infos'">
+      <ion-buttons slot="secondary">
+        <ion-button fill="solid" style="font-size: 18px;margin: -12px;" (click)="getCurrentCoordinates()"
+          color="secondary">
+          <ion-icon slot="start" name="location"></ion-icon>
+        </ion-button>
+        <ion-button fill="solid" style="font-size: 18px;" color="secondary">
+          <ion-icon slot="start" name="images"></ion-icon>
+        </ion-button>
+        <ion-button fill="solid" style="font-size: 18px;margin: -12px;" color="secondary">
+          <ion-icon slot="start" name="camera"></ion-icon>
+        </ion-button>
+        <ion-button fill="solid" style="font-size: 18px;" (click)="onDismiss()" color="secondary">
+          <ion-icon slot="start" name="close-circle"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ng-container>
+
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-slides pager="false" [options]="slideOpts" #Slides>
+    <ion-slide>
+      <ion-content>
+        <div class="container-fluid" style=" height: 100% !important;">
+          <div class="form-group" style="margin-top: 35px;">
+            <label for="inputname">Site ID :</label>
+            <input class="form-control input-sm" [(ngModel)]="site.id" name="site.id">
+            <ng-container *ngIf="!site.id && verifeChamp">
+              <br>
+              <div class="champoblig">* Champ obligatoire </div>
+            </ng-container>
+          </div>
+          <div class="form-group">
+            <label for="inputname">Site Name :</label>
+            <input class="form-control input-sm" [(ngModel)]="site.nom" name="site.nom">
+            <ng-container *ngIf="!site.nom && verifeChamp">
+              <br>
+              <div class="champoblig">* Champ obligatoire </div>
+            </ng-container>
+          </div>
+          <div class="form-group">
+            <label for="inputname">Longitude :</label>
+            <input type="number" class="form-control input-sm" [(ngModel)]="site.longitude" name="site.longitude"
+              disabled>
+            <ng-container *ngIf="!site.longitude && verifeChamp">
+              <br>
+              <div class="champoblig">* Champ obligatoire </div>
+            </ng-container>
+          </div>
+          <div class="form-group">
+            <label for="inputname">Latitude :</label>
+            <input type="number" class="form-control input-sm" [(ngModel)]="site.latitude" name="site.latitude"
+              disabled>
+            <ng-container *ngIf="!site.latitude && verifeChamp">
+              <br>
+              <div class="champoblig">* Champ obligatoire </div>
+            </ng-container>
+          </div>
+        </div>
+      </ion-content>
+    </ion-slide>
+    <ion-slide>
+      <ion-content>
+        <ion-card>
+          <ion-row class="SousFamille">
+            <ion-label>Cordonnées du site</ion-label>
+          </ion-row>
+          <ion-card-header style="height: 53px;" color="medium">
+            <div class="row">
+              <div style="margin-left: 5px;">
+                <ng-container *ngIf="this?.Question?.repSelect">
+                  <ion-icon name="happy" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: green;">
+                  </ion-icon>
+                </ng-container>
+                <ng-container *ngIf="!this?.Question?.repSelect">
+                  <ion-icon name="sad" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: red;">
+                  </ion-icon>
+                </ng-container>
+                <ion-label style="font-size: 16px;">Question 1 (Critique)</ion-label>
+              </div>
+              <div style="margin-top: -4px;">
+                <ion-buttons slot="secondary" style="position: absolute; right: 14px;">
+                  <ion-button fill="solid" style="font-size: 15px;margin: -12px;" color="medium"
+                    (click)="GoesTOCommentes()">
+                    <ion-icon slot="start" name="chatbubble"></ion-icon>
+                  </ion-button>
+                  <ion-button fill="solid" style="font-size: 15px;" color="medium" (click)="GoesTOGallery()">
+                    <ion-icon slot="start" name="images"></ion-icon>
+                  </ion-button>
+                  <ion-button fill="solid" style="font-size: 15px;margin: -12px;" color="medium"
+                    (click)="chargerImageCamera()">
+                    <ion-icon slot="start" name="camera"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </div>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <p style="font-size: 16px;text-align: justify;">
+              Aménagements sécuritaires et protection collective con au dossier technique
+            </p>
+          </ion-card-content>
+          <ion-row class="cardfooter">
+            <div class="container-fluid">
+              <div class="form-group">
+                <select class="browser-default custom-select" id="repSelect">
+                  <option value="D2S">D2S</option>
+                  <option value="Gadget">Gadget</option>
+                  <option value="informatique">M.informatique</option>
+                  <option value="Telephones">Telephones</option>
+                  <option value="Bureautique">Bureautique</option>
+                  <option value="Divers">Divers</option>
+                  <option value="Mobilier">Mobilier</option>
+                </select>
+              </div>
+            </div>
+          </ion-row>
+
+        </ion-card>
+        <ion-card id="ques1">
+          <ion-row class="SousFamille">
+            <ion-label>Cordonnées du site</ion-label>
+          </ion-row>
+          <ion-card-header style="height: 53px;" color="medium">
+            <div class="row">
+              <div style="margin-left: 5px;">
+                <ng-container *ngIf="this?.Question?.repSelect">
+                  <ion-icon name="happy" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: green;">
+                  </ion-icon>
+                </ng-container>
+                <ng-container *ngIf="!this?.Question?.repSelect">
+                  <ion-icon name="sad" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: red;">
+                  </ion-icon>
+                </ng-container>
+                <ion-label style="font-size: 16px;">Question 1 (Critique)</ion-label>
+              </div>
+              <div style="margin-top: -4px;">
+                <ion-buttons slot="secondary" style="position: absolute; right: 14px;">
+                  <ion-button fill="solid" style="font-size: 15px;margin: -12px;" color="medium"
+                    (click)="GoesTOCommentes()">
+                    <ion-icon slot="start" name="chatbubble"></ion-icon>
+                  </ion-button>
+                  <ion-button fill="solid" style="font-size: 15px;" color="medium" (click)="GoesTOGallery()">
+                    <ion-icon slot="start" name="images"></ion-icon>
+                  </ion-button>
+                  <ion-button fill="solid" style="font-size: 15px;margin: -12px;" color="medium"
+                    (click)="chargerImageCamera()">
+                    <ion-icon slot="start" name="camera"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </div>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <p style="font-size: 16px;text-align: justify;">
+              Aménagements sécuritaires et protection collective con au dossier technique
+            </p>
+          </ion-card-content>
+
+          <ion-row class="cardfooter">
+            <div class="container-fluid">
+              <div class="form-group">
+                <input class="form-control input-sm" id="repInput" placeholder="Reponse">
+              </div>
+            </div>
+          </ion-row>
+
+
+        </ion-card>
+        <ion-card id="ques1">
+          <ion-row class="SousFamille">
+            <ion-label>Cordonnées du site</ion-label>
+          </ion-row>
+          <ion-card-header style="height: 53px;" color="medium">
+            <div class="row">
+              <div style="margin-left: 5px;">
+                <ng-container *ngIf="this?.Question?.repSelect">
+                  <ion-icon name="happy" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: green;">
+                  </ion-icon>
+                </ng-container>
+                <ng-container *ngIf="!this?.Question?.repSelect">
+                  <ion-icon name="sad" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: red;">
+                  </ion-icon>
+                </ng-container>
+                <ion-label style="font-size: 16px;">Question 1 (Critique)</ion-label>
+              </div>
+              <div style="margin-top: -4px;">
+                <ion-buttons slot="secondary" style="position: absolute; right: 14px;">
+                  <ion-button fill="solid" style="font-size: 15px;margin: -12px;" color="medium"
+                    (click)="GoesTOCommentes()">
+                    <ion-icon slot="start" name="chatbubble"></ion-icon>
+                  </ion-button>
+                  <ion-button fill="solid" style="font-size: 15px;" color="medium" (click)="GoesTOGallery()">
+                    <ion-icon slot="start" name="images"></ion-icon>
+                  </ion-button>
+                  <ion-button fill="solid" style="font-size: 15px;margin: -12px;" color="medium"
+                    (click)="chargerImageCamera()">
+                    <ion-icon slot="start" name="camera"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </div>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <p style="font-size: 16px;text-align: justify;">
+              Aménagements sécuritaires et protection collective con au dossier technique
+            </p>
+          </ion-card-content>
+          <ion-row class="cardfooter">
+            <div class="container-fluid">
+              <div class="form-group">
+                <select class="browser-default custom-select" id="repSelect">
+                  <option value="D2S">D2S</option>
+                  <option value="Gadget">Gadget</option>
+                  <option value="informatique">M.informatique</option>
+                  <option value="Telephones">Telephones</option>
+                  <option value="Bureautique">Bureautique</option>
+                  <option value="Divers">Divers</option>
+                  <option value="Mobilier">Mobilier</option>
+                </select>
+              </div>
+            </div>
+          </ion-row>
+
+        </ion-card>
+
+      </ion-content>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 3</h1>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 4</h1>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 5</h1>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>
+<ng-container *ngIf='this?.allNumber'>
+  <ion-label class="lengthSlide">{{this?.currentNumber}} of {{this?.allNumber }} </ion-label>
+</ng-container>
+<ion-footer style="margin-top: 70px;" no-border>
+  <div class="row">
+    <ng-container *ngIf="this?.currentNumber != 0">
+      <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+        <ion-fab-button (click)="prev()" color="secondary">
+          <ion-icon name="arrow-back-circle"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ng-container>
+
+    <ng-container *ngIf="this?.currentNumber != this?.allNumber">
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="next()" color="secondary">
+          <ion-icon name="arrow-forward-circle"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ng-container>
+  </div>
+</ion-footer>

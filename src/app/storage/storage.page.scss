@@ -6,3 +6,18 @@ ion-label {
     text-align: center;
     font-size: 11px;
   }
+  .banner {
+    height: 230px;
+    position: relative;
+    z-index: 1;
+    background: url('../../assets/icon/home/header.png') center center no-repeat;
+    background-size: cover;
+  }
+.col-8 label{
+    font-weight: 700;
+    line-height: 14px;
+  }
+
+  ion-content{
+    --background: ghostwhite;
+  }

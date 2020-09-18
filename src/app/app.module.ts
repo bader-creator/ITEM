@@ -11,6 +11,14 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtModule } from "@auth0/angular-jwt";
+import { GoogleMaps } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -23,6 +31,7 @@ export function tokenGetter() {
     AppRoutingModule,
     SuperTabsModule.forRoot(),
     IonicStorageModule.forRoot(),
+    BrowserAnimationsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -38,8 +47,14 @@ export function tokenGetter() {
     SplashScreen,
     Network,
     HTTP,
+    Camera,
+    Geolocation,
     Storage,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    Base64,
+    FileChooser,
+    FilePath,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    GoogleMaps,
   ],
   bootstrap: [AppComponent]
 })

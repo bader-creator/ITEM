@@ -1,0 +1,127 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title style="color:white;font-family: Roboto;
+    font-weight: 700;
+    line-height: 58px;
+    text-align: center;margin-left: 50px;">BTS Acceptance infos</ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button fill="solid" style="font-size: 18px;" (click)="logout()" color="secondary">
+        <ion-icon slot="start" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="banner">
+    <!--image profil-->
+    <div class="profile">
+      <div class="content-profile">
+        <ion-card color="secondary">
+          <ion-card-content>
+            <div class="row" style="margin-bottom: 15px;">
+              <ion-label style="margin-left: 14px;">Recetteur</ion-label>
+              <ion-label style="position: absolute;right: 63px;">Audit Date</ion-label>
+            </div>
+            <div class="row">
+              <ion-label style="margin-left: 14px;">Ali Tabbabi</ion-label>
+              <ion-label style="position: absolute;right: 58px;">2019-12-12</ion-label>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </div>
+  <ion-card style="margin-top: 45px;">
+    <ion-card-header>
+      <ion-label style="font-size: 20px;"><b>Generality</b></ion-label>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label style="font-size:15px;">Chef de Projet : Adel Arfi</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label style="font-size:15px;">Fournisseur de pylone : Fournisseur 2</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label style="font-size:15px;">Aménageur : Sagemcom</ion-label>
+      </ion-item>
+    </ion-card-content>
+
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-label style="font-size: 20px;"><b>NC MOE AMENAGEUR</b></ion-label>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="row" style="margin-bottom: 7px;border-bottom: 1px groove;">
+        <div class="col-6">
+          <ion-label style="color: #25368c;font-size: 17px;">Categorie</ion-label>
+        </div>
+        <div class="col-6">
+          <ion-label style="color: #25368c;font-size: 17px;">Valeur</ion-label>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 7px;border-bottom: 1px groove;">
+        <div class="col-6">
+          <ion-label style="font-size:15px;color: black;">Global</ion-label>
+        </div>
+        <div class="col-6">
+          <ion-label style="font-size:15px;color: black;">4</ion-label>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 7px;border-bottom: 1px groove;">
+        <div class="col-6">
+          <ion-label style="font-size:15px;color: black;">Mineure</ion-label>
+        </div>
+        <div class="col-6">
+          <ion-label style="font-size:15px;color: black;">0</ion-label>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 7px;border-bottom: 1px groove;">
+        <div class="col-6">
+          <ion-label style="font-size:15px;color: black;">Majeure</ion-label>
+        </div>
+        <div class="col-6">
+          <ion-label style="font-size:15px;color: black;">3</ion-label>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 7px;">
+        <div class="col-6">
+          <ion-label style="font-size:15px;color: black;">Bloquante</ion-label>
+        </div>
+        <div class="col-6">
+          <ion-label style="font-size:15px;color: black;">1</ion-label>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer no-padding no-marging>
+
+  <ion-segment no-padding no-marging style="font-size: 10px;"
+    style="background-color: #25368c;border-top-left-radius: 20px; " [(ngModel)]="segment">
+    <ion-segment-button style="min-width: 60px;" value="accueil" [routerLink]="'/home'" routerDirection="root">
+      <ion-icon name="home" style="margin-bottom: 16px;color: white;"></ion-icon>
+      <ion-label>Accueil</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button style="min-width: 60px;" value="storage" [routerLink]="'/storage'" routerDirection="root">
+      <ion-icon name="archive" style="margin-bottom: 16px;color: white;"></ion-icon>
+      <ion-label>Storage</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button style="min-width: 60px;" value="audit" [routerLink]="'/audit'" routerDirection="root">
+      <ion-icon name="newspaper" style="margin-bottom: 16px;color: white;"></ion-icon>
+      <ion-label>Audit</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button style="min-width: 60px;" value="noeud" [routerLink]="'/noeud'" routerDirection="root">
+      <ion-icon name="radio" style="margin-bottom: 16px;color: white;"></ion-icon>
+      <ion-label>Noeud</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+
+</ion-footer>

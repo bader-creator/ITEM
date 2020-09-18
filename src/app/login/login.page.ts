@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthentificationService } from '../authentification.service';
+import { QuizzPage } from '../quizz/quizz.page';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,8 @@ export class LoginPage implements OnInit {
     'password': null
 
   }
-  constructor(private auth: AuthentificationService) { }
+
+  constructor(private auth: AuthentificationService, private alertCtrl: AlertController, private modalctrl: ModalController, private nav: NavController) { }
 
   ngOnInit() {
   }
@@ -26,6 +29,39 @@ export class LoginPage implements OnInit {
   }
   login() {
     this.auth.login(this.data);
+  }
+
+  async GoesTOuizz() {
+    const modal = await this.modalctrl.create({
+      component: QuizzPage,
+
+    })
+    modal.present();
+    await modal.onWillDismiss().then(d => {
+    })
+  }
+
+  async presentConfirm() {
+    let alert = await this.alertCtrl.create({
+      header: 'Are you sure ?',
+
+      buttons: [
+        {
+          text: 'CANCEL',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            console.log('Buy clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

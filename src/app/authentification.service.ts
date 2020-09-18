@@ -26,7 +26,7 @@ export class AuthentificationService {
   async presentToast(msg: string, color: string) {
     const toast = await this.toastController.create({
       message: msg,
-      duration: 5000,
+      duration: 3000,
       color: color,
     });
     toast.present();
@@ -43,7 +43,7 @@ export class AuthentificationService {
     let connectSubscription = this.network.onConnect().subscribe(() => {
       this.connected = true;
       console.log("connected", this.connected)
-      this.presentToast('vous êtes connecté sur ' + '' + this.network.type + '' + 'Connection,Woohoo!', "primary");
+      this.presentToast('vous êtes connecté sur ' + '' + this.network.type + '' + 'Connection', "primary");
 
     });
   }

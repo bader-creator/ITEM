@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-info-noeud',
-  templateUrl: './info-noeud.page.html',
-  styleUrls: ['./info-noeud.page.scss'],
+  selector: 'app-edit-info-site',
+  templateUrl: './edit-info-site.page.html',
+  styleUrls: ['./edit-info-site.page.scss'],
 })
-export class InfoNoeudPage implements OnInit {
+export class EditInfoSitePage implements OnInit {
 
   constructor(private modalctrl: ModalController) { }
 

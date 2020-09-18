@@ -1,0 +1,32 @@
+ion-slides{
+    height: 100% !important;
+}
+
+label{
+    float: left;
+}
+.lengthSlide{
+    position: absolute;
+    bottom: 30px;
+    align-self: center;
+    font-family: "Roboto Condensed";
+    font-weight: 700;
+    line-height: 3px;
+    color: #2b2424bd;
+}
+.champoblig{
+    font-size: 10px;
+    color: red;
+    float: left;
+    margin-top: -20px;
+}
+.SousFamille {
+    justify-content: center;
+    background-color: #6363a0;
+    height: 40px;
+}
+.SousFamille ion-label{
+    font-size: 16px;
+    margin-top: 8px;
+    color: white;
+}

@@ -27,6 +27,25 @@ const routes: Routes = [
     path: 'noeud',
     loadChildren: () => import('./noeud/noeud.module').then(m => m.NoeudPageModule)
   },
+  {
+    path: 'google-maps',
+    loadChildren: () => import('./google-maps/google-maps.module').then(m => m.GoogleMapsPageModule)
+  },
+  {
+    path: 'btsacceptance',
+    loadChildren: () => import('./btsacceptance/btsacceptance.module').then(m => m.BTSAcceptancePageModule)
+  },
+  {
+    path: 'gallery-site',
+    loadChildren: () => import('./gallery-site/gallery-site.module').then(m => m.GallerySitePageModule)
+  },
+  {
+    path: 'commentes-quizz',
+    loadChildren: () => import('./commentes-quizz/commentes-quizz.module').then( m => m.CommentesQuizzPageModule)
+  },
+
+
+
 
 
 
