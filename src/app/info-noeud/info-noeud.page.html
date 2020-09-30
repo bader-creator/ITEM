@@ -8,7 +8,7 @@
     </ion-title>
     <ion-buttons slot="secondary">
       <ion-button fill="solid" style="font-size: 18px;" color="secondary" (click)="onDismiss()"
-        [routerLink]="'/google-maps'" routerDirection="root">
+        [routerLink]="'/google-maps'" routerDirection="forward">
         <ion-icon slot="start" name="location"></ion-icon>
       </ion-button>
       <ion-button fill="solid" style="font-size: 18px;" (click)="onDismiss()" color="secondary">
@@ -22,7 +22,7 @@
   <ion-card>
     <ion-card-header style="border-bottom: 1px groove;">
       <ion-icon name="newspaper" style="color: #25368c;
-      font-size: 26px;" (click)="onDismiss()" [routerLink]="'/btsacceptance'" routerDirection="root"></ion-icon>
+      font-size: 26px;" (click)="onDismiss()" [routerLink]="'/btsacceptance'" routerDirection="forward"></ion-icon>
     </ion-card-header>
 
     <ion-card-content>

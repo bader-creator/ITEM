@@ -7,11 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
   },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
@@ -41,7 +36,11 @@ const routes: Routes = [
   },
   {
     path: 'commentes-quizz',
-    loadChildren: () => import('./commentes-quizz/commentes-quizz.module').then( m => m.CommentesQuizzPageModule)
+    loadChildren: () => import('./commentes-quizz/commentes-quizz.module').then(m => m.CommentesQuizzPageModule)
+  },
+  {
+    path: 'stock',
+    loadChildren: () => import('./stock/stock.module').then(m => m.StockPageModule)
   },
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthentificationService } from '../authentification.service';
 import { QuizzPage } from '../quizz/quizz.page';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +16,12 @@ export class LoginPage implements OnInit {
 
   }
 
-  constructor(private auth: AuthentificationService, private alertCtrl: AlertController, private modalctrl: ModalController, private nav: NavController) { }
+  constructor(private auth: AuthentificationService, private menuCtrl: MenuController, private alertCtrl: AlertController, private modalctrl: ModalController, private nav: NavController) {
+
+  }
 
   ngOnInit() {
+
   }
 
   passwordType: string = 'password';

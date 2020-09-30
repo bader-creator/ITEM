@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController, LoadingController, AlertController, NavController } from '@ionic/angular';
+import { ToastController, LoadingController, AlertController, NavController, MenuController } from '@ionic/angular';
 import { Network } from '@ionic-native/network/ngx';
 import { environment } from '../environments/environment';
 import { HTTP } from '@ionic-native/http/ngx';
@@ -11,7 +11,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthentificationService {
 
-  constructor(private network: Network, private helper: JwtHelperService, private nav: NavController, private storage: Storage, private http: HTTP, private loadingController: LoadingController, private alertController: AlertController, private toastController: ToastController) { }
+  constructor(private network: Network, private menuCtrl: MenuController, private helper: JwtHelperService, private nav: NavController, private storage: Storage, private http: HTTP, private loadingController: LoadingController, private alertController: AlertController, private toastController: ToastController) { }
 
 
   loading;
@@ -71,6 +71,7 @@ export class AuthentificationService {
 
         this.presentToast("Authentification effectuée avec succès", "success");
         this.nav.navigateForward(`/home`);
+        this.menuCtrl.enable(true);
       }).catch(error => {
         console.log(error);
         this.presentToast('le nom d\'utilisateur ou mot de passe est incorrect', "danger");
@@ -104,6 +105,7 @@ export class AuthentificationService {
             this.storage.remove('token');
             this.storage.remove('currentUser');
             this.nav.navigateForward(`/login`);
+            this.menuCtrl.enable(false);
           }
         }
       ]
@@ -119,13 +121,13 @@ export class AuthentificationService {
       let isExpired = this.helper.isTokenExpired(val);
       console.log("decode", decoded);
       if (!isExpired) {
+        this.nav.navigateRoot(`/home`);
         this.user = decoded;
         this.token = val;
-        this.nav.navigateForward(`/home`);
-
       } else {
         this.storage.remove('token');
-        this.nav.navigateForward(`/login`);
+        this.nav.navigateRoot(`/login`);
+        this.menuCtrl.enable(false);
       }
     })
   }

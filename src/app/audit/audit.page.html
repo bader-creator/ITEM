@@ -3,43 +3,62 @@
     <ion-title style="color:white;font-family: Roboto;
     font-weight: 700;
     line-height: 58px;
-    text-align: center;margin-left: 50px;">Audit</ion-title>
+    text-align: center;">Audit</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-buttons slot="secondary">
-      <ion-button fill="solid" style="font-size: 18px;" (click)="logout()" color="secondary">
-        <ion-icon slot="start" name="log-out"></ion-icon>
+      <ion-button fill="solid" style="font-size: 18px;" [routerLink]="'/home'" routerDirection="forward"
+        color="secondary">
+        <ion-icon slot="start" name="home"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-content>
+      <div class="row" style="border-bottom: 1px groove;">
+        <div class="col-2">
+          <ion-icon name="settings" style="font-size: 24px;color: #25368c;"></ion-icon>
 
+        </div>
+        <div class="col-8" style="text-align: center;">
+          <ion-label> Noeud Audit (TO DO)</ion-label>
+        </div>
+        <div class="col-2">
+          <ion-badge color="secondary" style="float: right;font-size: 18px;">9</ion-badge>
+        </div>
+
+      </div>
+      <div class="row" style="margin-top: 24px; place-content: center;">
+        <ion-label>More Info</ion-label>
+        <ion-icon name="arrow-forward" style="font-size: 20px;margin-top: -8px;margin-left: 5px;"></ion-icon>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <div class="row" style="border-bottom: 1px groove;">
+        <div class="col-2">
+          <ion-icon name="archive" style="font-size: 24px;color: #25368c;"></ion-icon>
+
+        </div>
+        <div class="col-8" style="text-align: center;">
+          <ion-label>Local Storage</ion-label>
+        </div>
+        <div class="col-2">
+          <ion-badge color="secondary" style="float: right;font-size: 18px;">11</ion-badge>
+        </div>
+
+      </div>
+      <div class="row" style="margin-top: 24px; place-content: center;">
+        <ion-label>More Info</ion-label>
+        <ion-icon name="arrow-forward" style="font-size: 20px;margin-top: -8px;margin-left: 5px;"></ion-icon>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
 </ion-content>
-
-<ion-footer no-padding no-marging>
-
-  <ion-segment no-padding no-marging style="font-size: 10px;"
-    style="background-color: #25368c;border-top-left-radius: 20px; " [(ngModel)]="segment">
-    <ion-segment-button style="min-width: 60px;" value="accueil" [routerLink]="'/home'" routerDirection="root">
-      <ion-icon name="home" style="margin-bottom: 16px;color: white;"></ion-icon>
-      <ion-label>Accueil</ion-label>
-    </ion-segment-button>
-
-    <ion-segment-button style="min-width: 60px;" value="storage" [routerLink]="'/storage'" routerDirection="root">
-      <ion-icon name="archive" style="margin-bottom: 16px;color: white;"></ion-icon>
-      <ion-label>Storage</ion-label>
-    </ion-segment-button>
-
-    <ion-segment-button style="min-width: 60px;" value="audit" [routerLink]="'/audit'" routerDirection="root">
-      <ion-icon name="newspaper" style="margin-bottom: 16px;color: white;"></ion-icon>
-      <ion-label>Audit</ion-label>
-    </ion-segment-button>
-
-    <ion-segment-button style="min-width: 60px;" value="noeud" [routerLink]="'/noeud'" routerDirection="root">
-      <ion-icon name="radio" style="margin-bottom: 16px;color: white;"></ion-icon>
-      <ion-label>Noeud</ion-label>
-    </ion-segment-button>
-
-  </ion-segment>
-
-</ion-footer>

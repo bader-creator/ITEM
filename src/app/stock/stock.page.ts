@@ -2,16 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { AuthentificationService } from '../authentification.service';
 
 @Component({
-  selector: 'app-btsacceptance',
-  templateUrl: './btsacceptance.page.html',
-  styleUrls: ['./btsacceptance.page.scss'],
+  selector: 'app-stock',
+  templateUrl: './stock.page.html',
+  styleUrls: ['./stock.page.scss'],
 })
-export class BTSAcceptancePage implements OnInit {
+export class StockPage implements OnInit {
 
   constructor(private auth: AuthentificationService) { }
 
   ngOnInit() {
   }
 
-
+  logout() {
+    this.auth.logout()
+  }
 }

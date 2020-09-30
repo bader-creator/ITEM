@@ -47,7 +47,6 @@ export class QuizzPage implements OnInit {
     this.AllQuestion.push(this.Question)
   }
 
-
   getCurrentCoordinates() {
     console.log('geoLatitude', this.geoLatitude)
     console.log('geolocation', this.geolocation)
@@ -61,13 +60,10 @@ export class QuizzPage implements OnInit {
     });
   }
 
-
-
   onDismiss() {
     this.modalctrl.dismiss();
 
   }
-
 
   allNumber
   ionViewWillEnter() {
@@ -79,8 +75,6 @@ export class QuizzPage implements OnInit {
       this.currentNumber = index;
     });
   }
-
-
 
   ngAfterViewInit() {
     setTimeout(() => {

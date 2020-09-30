@@ -55,58 +55,27 @@ export class NoeudPage implements OnInit {
   }
   public isSearchbarOpened = false;
   ListeSite = []
-  ListeAremoire = []
-  ListeChambre = []
   getItems(event) {
     let val = event.target.value;
     this.ListeSite = [];
-    this.ListeAremoire = [];
-    this.ListeChambre = [];
+
     this.ListeSite = this.data
-    this.ListeAremoire = this.data
-    this.ListeChambre = this.data
 
-    if (this.segment == "site") {
-
-      if (val && val.trim() != '') {
-        this.ListeSite = this.ListeSite.filter((location) => {
-          if (location.nom != null)
-            return location.nom.toLowerCase().indexOf(val.toLowerCase()) > -1;
-        })
-      }
+    if (val && val.trim() != '') {
+      this.ListeSite = this.ListeSite.filter((location) => {
+        if (location.nom != null)
+          return location.nom.toLowerCase().indexOf(val.toLowerCase()) > -1;
+      })
     }
-    if (this.segment == "armoire") {
-
-      if (val && val.trim() != '') {
-        this.ListeAremoire = this.ListeAremoire.filter((location) => {
-          if (location.nom != null)
-            return location.nom.toLowerCase().indexOf(val.toLowerCase()) > -1;
-        })
-      }
-    }
-    if (this.segment == "chambre") {
-
-      if (val && val.trim() != '') {
-        this.ListeChambre = this.ListeChambre.filter((location) => {
-          if (location.nom != null)
-            return location.nom.toLowerCase().indexOf(val.toLowerCase()) > -1;
-        })
-      }
-    }
-
 
   }
+
   doRefresh(event) {
 
-    if (this.segment == "site") {
-      this.ListeSite = this.data
-    }
-    if (this.segment == "armoire") {
-      this.ListeAremoire = this.data
-    }
-    if (this.segment == "chambre") {
-      this.ListeChambre = this.data
-    }
+
+    this.ListeSite = this.data
+
+
     setTimeout(() => {
 
       event.target.complete();
@@ -115,8 +84,7 @@ export class NoeudPage implements OnInit {
 
   GetData() {
     this.ListeSite = this.data
-    this.ListeAremoire = this.data
-    this.ListeChambre = this.data
+
   }
 
   idRegion
@@ -129,48 +97,22 @@ export class NoeudPage implements OnInit {
 
     })
     modal.present();
-    if (this.segment == "site") {
-      const { data } = await modal.onWillDismiss();
-      if (data) {
-        this.idRegion = data.id
-        console.log('idRegion', this.idRegion)
-        console.log('data', data)
-        if (data.nom && data.nom.trim() != '') {
-          this.ListeSite = this.ListeSite.filter((location) => {
-            if (location.region != null)
-              return location.region.toLowerCase().indexOf(data.nom.toLowerCase()) > -1;
-          })
-        }
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.idRegion = data.id
+      console.log('idRegion', this.idRegion)
+      console.log('data', data)
+      if (data.nom && data.nom.trim() != '') {
+        this.ListeSite = this.ListeSite.filter((location) => {
+          if (location.region != null)
+            return location.region.toLowerCase().indexOf(data.nom.toLowerCase()) > -1;
+        })
       }
     }
-    if (this.segment == "armoire") {
-      const { data } = await modal.onWillDismiss();
-      if (data) {
-        this.idRegion = data.id
-        console.log('idRegion', this.idRegion)
-        console.log('data', data)
-        if (data.nom && data.nom.trim() != '') {
-          this.ListeAremoire = this.ListeAremoire.filter((location) => {
-            if (location.region != null)
-              return location.region.toLowerCase().indexOf(data.nom.toLowerCase()) > -1;
-          })
-        }
-      }
-    }
-    if (this.segment == "chambre") {
-      const { data } = await modal.onWillDismiss();
-      if (data) {
-        this.idRegion = data.id
-        console.log('idRegion', this.idRegion)
-        console.log('data', data)
-        if (data.nom && data.nom.trim() != '') {
-          this.ListeChambre = this.ListeChambre.filter((location) => {
-            if (location.region != null)
-              return location.region.toLowerCase().indexOf(data.nom.toLowerCase()) > -1;
-          })
-        }
-      }
-    }
+
+
+
   }
   async GoesTODetail() {
     const modal = await this.modalctrl.create({
