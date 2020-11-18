@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
+    font-weight: 700;
+    line-height: 58px;">
+            Gallery
+        </ion-title>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" (click)="onDismiss()" color="secondary">
+                <ion-icon slot="start" name="close-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ng-container *ngIf='this?.imagsite'>
+        <ion-card>
+            <ion-card-header color="secondary">
+                <ion-icon name="calendar" style="margin-bottom: -1px;"></ion-icon>
+                <ion-label style="margin-left: 5px;">{{this?.imagsite?.date | date: 'dd-MM-yyyy HH:mm'}}</ion-label>
+            </ion-card-header>
+            <ion-card-content>
+                <div class="banner">
+                    <img [src]="this?.imagsite?.image" class="img-responsive" style="height: 100%;width: 100%;" alt="img">
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
+</ion-content>

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
-import { QuizzPage } from '../quizz/quizz.page';
+import { ListeFichierPage } from '../liste-fichier/liste-fichier.page';
 
 @NgModule({
   imports: [
@@ -16,7 +16,7 @@ import { QuizzPage } from '../quizz/quizz.page';
     IonicModule,
     LoginPageRoutingModule
   ],
-  declarations: [LoginPage, QuizzPage],
-  entryComponents: [QuizzPage],
+  declarations: [LoginPage, ListeFichierPage],
+  entryComponents: [ListeFichierPage],
 })
 export class LoginPageModule { }

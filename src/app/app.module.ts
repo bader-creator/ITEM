@@ -18,14 +18,13 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-
-
+import { GalleryNoeudPage } from './gallery-noeud/gallery-noeud.page'
 export function tokenGetter() {
   return localStorage.getItem("access_token");
 }
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, GalleryNoeudPage],
+  entryComponents: [GalleryNoeudPage],
   imports: [BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,

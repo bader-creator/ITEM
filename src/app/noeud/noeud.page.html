@@ -1,46 +1,44 @@
 <ion-header>
-  <ion-toolbar color="secondary">
-    <ion-title style="color:white;font-family: Roboto;
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
     font-weight: 700;
     line-height: 58px;">Site</ion-title>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button fill="solid" style="font-size: 18px;" (click)="GoesTOListeRegions()" color="secondary">
-        <ion-icon slot="start" name="filter"></ion-icon>
-      </ion-button>
-      <ion-button style="font-size: 18px;" *ngIf="!isSearchbarOpened" (click)="isSearchbarOpened=true">
-        <ion-icon slot="start" name="search"></ion-icon>
-      </ion-button>
-      <ion-button fill="solid" style="font-size: 18px;" [routerLink]="'/home'" routerDirection="forward"
-        color="secondary">
-        <ion-icon slot="start" name="home"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" (click)="GoesTOListeRegions()" color="secondary">
+                <ion-icon slot="start" name="filter"></ion-icon>
+            </ion-button>
+            <ion-button style="font-size: 18px;" *ngIf="!isSearchbarOpened" (click)="isSearchbarOpened=true">
+                <ion-icon slot="start" name="search"></ion-icon>
+            </ion-button>
+            <ion-button fill="solid" style="font-size: 18px;" [routerLink]="'/home'" routerDirection="forward" color="secondary">
+                <ion-icon slot="start" name="home"></ion-icon>
+            </ion-button>
+        </ion-buttons>
 
-  </ion-toolbar>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <!--_____________________________________________________________-->
+    <!--_____________________________________________________________-->
 
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
-    </ion-refresher-content>
-  </ion-refresher>
-  <ion-searchbar *ngIf="isSearchbarOpened" showCancelButton="true" (ionInput)="getItems($event)"
-    (ionCancel)="getItems($event)" (ionCancel)="isSearchbarOpened=false"></ion-searchbar>
-  <ion-list>
-    <ion-item *ngFor="let t of ListeSite" (click)="GoesTODetail()">
-      <ion-icon name="radio" style="margin-bottom: -1px;
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-searchbar *ngIf="isSearchbarOpened" showCancelButton="true" (ionInput)="getItems($event)" (ionCancel)="getItems($event)" (ionCancel)="isSearchbarOpened=false"></ion-searchbar>
+    <ion-list>
+        <ion-item *ngFor="let site of ListesSite" (click)="GoesTODetail(site.id)">
+            <ion-icon name="radio" style="margin-bottom: -1px;
         margin-right: 7px;"></ion-icon>
-      <ion-label style="font-size: 18px;">{{t.nom}}</ion-label>
-    </ion-item>
-  </ion-list>
+            <ion-label style="font-size: 18px;">{{site.name}}</ion-label>
+        </ion-item>
+    </ion-list>
 
 
 
-  <!--_____________________________________________________________-->
+    <!--_____________________________________________________________-->
 </ion-content>

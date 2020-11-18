@@ -23,7 +23,7 @@ const routes: Routes = [
     loadChildren: () => import('./noeud/noeud.module').then(m => m.NoeudPageModule)
   },
   {
-    path: 'google-maps',
+    path: 'google-maps/:latitude/:longitude',
     loadChildren: () => import('./google-maps/google-maps.module').then(m => m.GoogleMapsPageModule)
   },
   {
@@ -42,6 +42,8 @@ const routes: Routes = [
     path: 'stock',
     loadChildren: () => import('./stock/stock.module').then(m => m.StockPageModule)
   },
+
+
 
 
 

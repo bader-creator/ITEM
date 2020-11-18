@@ -1,64 +1,79 @@
 <ion-header>
-  <ion-toolbar color="secondary">
-    <ion-title style="color:white;font-family: Roboto;
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
     font-weight: 700;
     line-height: 58px;
     text-align: center;">Audit</ion-title>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button fill="solid" style="font-size: 18px;" [routerLink]="'/home'" routerDirection="forward"
-        color="secondary">
-        <ion-icon slot="start" name="home"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" [routerLink]="'/home'" routerDirection="forward" color="secondary">
+                <ion-icon slot="start" name="home"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-content>
-      <div class="row" style="border-bottom: 1px groove;">
-        <div class="col-2">
-          <ion-icon name="settings" style="font-size: 24px;color: #25368c;"></ion-icon>
+    <ion-card *ngFor="let liste of ListNoeud">
+        <ion-card-header>
+            <div class="row" style="border-bottom: 1px groove;margin-bottom: -17px;">
+                <div class="col-2">
+                    <ion-icon name="add-circle" (click)="GoesTOuizz(liste.site.id,liste.site.siteId,liste.site.name,liste.fiche.id)" style="font-size: 24px;color: #25368c;"></ion-icon>
 
-        </div>
-        <div class="col-8" style="text-align: center;">
-          <ion-label> Noeud Audit (TO DO)</ion-label>
-        </div>
-        <div class="col-2">
-          <ion-badge color="secondary" style="float: right;font-size: 18px;">9</ion-badge>
-        </div>
+                </div>
+                <div class="col-8" style="text-align: center;">
+                </div>
+                <div class="col-2">
+                    <ion-icon name="location" (click)="GoToMaps(liste.site.latitude,liste.site.longitude)" style="font-size: 24px;color: #25368c;"></ion-icon>
+                </div>
 
-      </div>
-      <div class="row" style="margin-top: 24px; place-content: center;">
-        <ion-label>More Info</ion-label>
-        <ion-icon name="arrow-forward" style="font-size: 20px;margin-top: -8px;margin-left: 5px;"></ion-icon>
-      </div>
+            </div>
+        </ion-card-header>
+        <ion-card-content>
+            <div class="row" style="margin-top: 24px; place-content: center;">
+                <div class="col-6">
+                    <ion-label>Site ID :</ion-label>
+                </div>
+                <div class="col-6">
+                    <label>{{liste.site.siteId}}</label>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 12px; place-content: center;">
+                <div class="col-6">
+                    <ion-label>Site Name :</ion-label>
+                </div>
+                <div class="col-6">
+                    <label>{{liste.site.name}}</label>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 12px; place-content: center;">
+                <div class="col-6">
+                    <ion-label>Date Audit :</ion-label>
+                </div>
+                <div class="col-6">
+                    <label>{{liste.dateCreation | date: 'dd-MM-yyyy HH:mm'}}</label>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 12px; place-content: center;">
+                <div class="col-6">
+                    <ion-label>Region :</ion-label>
+                </div>
+                <div class="col-6">
+                    <label>{{liste.site.region.name}}</label>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 12px; place-content: center;">
+                <div class="col-6">
+                    <ion-label>Chef de projet :</ion-label>
+                </div>
+                <div class="col-6">
+                    <label>{{liste.userCreator.lastName}} {{liste.userCreator.firstName}}</label>
+                </div>
+            </div>
 
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content>
-      <div class="row" style="border-bottom: 1px groove;">
-        <div class="col-2">
-          <ion-icon name="archive" style="font-size: 24px;color: #25368c;"></ion-icon>
+        </ion-card-content>
+    </ion-card>
 
-        </div>
-        <div class="col-8" style="text-align: center;">
-          <ion-label>Local Storage</ion-label>
-        </div>
-        <div class="col-2">
-          <ion-badge color="secondary" style="float: right;font-size: 18px;">11</ion-badge>
-        </div>
-
-      </div>
-      <div class="row" style="margin-top: 24px; place-content: center;">
-        <ion-label>More Info</ion-label>
-        <ion-icon name="arrow-forward" style="font-size: 20px;margin-top: -8px;margin-left: 5px;"></ion-icon>
-      </div>
-
-    </ion-card-content>
-  </ion-card>
 </ion-content>

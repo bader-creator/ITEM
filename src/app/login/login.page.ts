@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthentificationService } from '../authentification.service';
-import { QuizzPage } from '../quizz/quizz.page';
+import { ListeFichierPage } from '../liste-fichier/liste-fichier.page';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { MenuController } from '@ionic/angular';
+import { RestApiService } from '../rest-api.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,7 @@ export class LoginPage implements OnInit {
 
   }
 
-  constructor(private auth: AuthentificationService, private menuCtrl: MenuController, private alertCtrl: AlertController, private modalctrl: ModalController, private nav: NavController) {
+  constructor(private auth: AuthentificationService, private api: RestApiService, private storage: Storage, private menuCtrl: MenuController, private alertCtrl: AlertController, private modalctrl: ModalController, private nav: NavController) {
 
   }
 
@@ -31,18 +33,27 @@ export class LoginPage implements OnInit {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
+
   login() {
     this.auth.login(this.data);
   }
+  Listefiches
+  GoesTOuizz() {
+    this.storage.get('Listefiches').then(async (val) => {
+      console.log('val', val)
+      if (val) {
+        const modal = await this.modalctrl.create({
+          component: ListeFichierPage,
+          cssClass: 'listeFichier'
+        })
+        modal.present();
+      } else {
+        this.api.presentToast('Vous devez connecter pour avoir la liste des fichiers', 'danger')
+      }
 
-  async GoesTOuizz() {
-    const modal = await this.modalctrl.create({
-      component: QuizzPage,
+    });
 
-    })
-    modal.present();
-    await modal.onWillDismiss().then(d => {
-    })
+
   }
 
   async presentConfirm() {

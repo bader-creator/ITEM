@@ -1,3 +1,4 @@
+import { CompileShallowModuleMetadata } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { AlertController, ModalController } from '@ionic/angular';
@@ -10,29 +11,37 @@ import { Storage } from '@ionic/storage';
 })
 export class GallerySitePage implements OnInit {
   Question
-  image = []
-
+  images = []
+  idQuestion
   constructor(private storage: Storage, private sanitizer: DomSanitizer, private alertController: AlertController, private modalctrl: ModalController) { }
 
   ngOnInit() {
-    this.storage.get('Question').then((val: any) => {
-      this.Question = val;
-      this.Question.image.forEach(element => {
-        this.image.push(
-          {
-            "imageData": this.sanitizer.bypassSecurityTrustUrl(element.imageData),
-            "date": element.date
+    this.idQuestion = this.idQuestion;
+    console.log('idQuestion', this.idQuestion)
+    this.storage.get('images').then((val: any) => {
+      console.log('val', val)
+      if (val) {
+        val.forEach(element => {
+          if (element.id == this.idQuestion) {
+            this.images.push(element);
           }
-        );
+        });
+      }
+      console.log('this.images', this.images)
+      this.images.forEach(element => {
+        element.imageData = this.sanitizer.bypassSecurityTrustUrl(element.imageData)
       });
 
     });
+  }
+  ionViewWillLeave() {
+    this.images = [];
   }
 
   onDismiss() {
     this.modalctrl.dismiss();
   }
-  async ConfirmSupperssion() {
+  async ConfirmSupperssion(index) {
     const alert = await this.alertController.create({
       header: 'Confirm!',
       buttons: [
@@ -41,12 +50,15 @@ export class GallerySitePage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
           }
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('Confirm Okay');
+            console.log('index', index);
+            if (index > -1) {
+              this.images.splice(index, 1);
+            }
+            this.storage.set('images', this.images)
           }
         }
       ]

@@ -12,32 +12,33 @@ export class CommentesQuizzPage implements OnInit {
   comment = {
     "commentaire": "",
   }
-  CommentByQuizz
-  Question
-  comments = [];
-  GetComment = []
+
   constructor(private modalctrl: ModalController, private storage: Storage, private alertController: AlertController) {
     this.ii = setInterval(() => {
       this.getComments();
 
     }, 2000);
   }
-
+  idQuestion
   ngOnInit() {
+    this.idQuestion = this.idQuestion
+
   }
 
   onDismiss() {
-    this.modalctrl.dismiss({ comments: this.comments });
+    this.modalctrl.dismiss();
   }
+  Allcomments = []
   getComments() {
     this.storage.get('CommentQuizz').then((val: any) => {
       console.log('val', val)
-      this.GetComment = val;
+      if (val) {
+        this.Allcomments = val;
+      }
+      console.log('his.Allcomments', this.Allcomments)
+
     });
-    this.storage.get('Question').then((val: any) => {
-      this.Question = val;
-      this.CommentByQuizz = this.Question.comments
-    });
+
   }
 
   ionViewWillLeave() {
@@ -46,15 +47,14 @@ export class CommentesQuizzPage implements OnInit {
   }
 
   sendMessage() {
-    //var commentaire = (<HTMLInputElement>document.getElementById("comment")).value;
-    console.log('this.commentaire', this.comment)
     if (this.comment.commentaire) {
-      this.comments.push(
+      this.Allcomments.push(
         {
+          idQuestion: this.idQuestion,
           commentaire: this.comment.commentaire,
           date: new Date().toISOString(),
         });
-      this.storage.set('CommentQuizz', this.comments);
+      this.storage.set('CommentQuizz', this.Allcomments);
     }
     this.resetView()
   }
@@ -64,7 +64,7 @@ export class CommentesQuizzPage implements OnInit {
       "commentaire": "",
     }
   }
-  async ConfirmSupperssion() {
+  async ConfirmSupperssion(index) {
     const alert = await this.alertController.create({
       header: 'Confirm!',
       buttons: [
@@ -73,12 +73,16 @@ export class CommentesQuizzPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
           }
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('Confirm Okay');
+            console.log('index', index);
+            if (index > -1) {
+              this.Allcomments.splice(index, 1);
+            }
+            this.storage.set('CommentQuizz', this.Allcomments)
+
           }
         }
       ]

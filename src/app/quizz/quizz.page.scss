@@ -1,11 +1,12 @@
-ion-slides{
+ion-slides {
     height: 100% !important;
 }
 
-label{
+label {
     float: left;
 }
-.lengthSlide{
+
+.lengthSlide {
     position: absolute;
     bottom: 30px;
     align-self: center;
@@ -14,18 +15,21 @@ label{
     line-height: 3px;
     color: #2b2424bd;
 }
-.champoblig{
+
+.champoblig {
     font-size: 10px;
     color: red;
     float: left;
     margin-top: -20px;
 }
+
 .SousFamille {
     justify-content: center;
-    background-color: #6363a0;
+    background-color: #4048C9;
     height: 40px;
 }
-.SousFamille ion-label{
+
+.SousFamille ion-label {
     font-size: 16px;
     margin-top: 8px;
     color: white;

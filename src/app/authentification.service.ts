@@ -6,12 +6,16 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { Storage } from '@ionic/storage';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthentificationService {
 
   constructor(private network: Network, private menuCtrl: MenuController, private helper: JwtHelperService, private nav: NavController, private storage: Storage, private http: HTTP, private loadingController: LoadingController, private alertController: AlertController, private toastController: ToastController) { }
+
+
+
 
 
   loading;
@@ -49,8 +53,9 @@ export class AuthentificationService {
   }
 
   token
-  IdUser
-  currentUser
+
+
+  currentUser = { "id": null, "firstName": null, "lastName": null, "group": null, "job": null, "path": null, "phone": null, "userName": null }
   login(credentials) {
     this.loadingFn();
 
@@ -58,17 +63,21 @@ export class AuthentificationService {
       .then(data => {
         //convert to json
         let resultat = JSON.parse(data.data);
-        console.log("data", resultat);
-        this.token = resultat.token;
-        this.currentUser = resultat.data;
+        console.log("resultat", resultat);
+        this.currentUser.id = resultat.id;
+        this.currentUser.firstName = resultat.firstName;
+        this.currentUser.lastName = resultat.lastName;
+        this.currentUser.group = resultat.group;
+        this.currentUser.job = resultat.job;
+        this.currentUser.path = resultat.path;
+        this.currentUser.phone = resultat.phone;
+        this.currentUser.userName = resultat.userName;
 
-        console.log('token', this.token)
-        console.log('currentUser', this.currentUser)
+        this.token = resultat.data.token;
         this.storage.set('token', this.token);
-        this.storage.set('currentUser', this.currentUser);
-
+        this.storage.set('currentUser', this.currentUser)
+        this.listeFiches()
         this.dismissFn();
-
         this.presentToast("Authentification effectuée avec succès", "success");
         this.nav.navigateForward(`/home`);
         this.menuCtrl.enable(true);
@@ -81,6 +90,28 @@ export class AuthentificationService {
 
 
   }
+
+  Listefiches
+  listeFiches() {
+    console.log()
+    this.http.get(`${environment.url}/fiches`,
+      {},
+      {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.token,
+      }
+    ).then(d => {
+      let data = JSON.parse(d.data);
+      console.log('data', data)
+      this.Listefiches = data["hydra:member"]
+      console.log('Listefiches', this.Listefiches)
+      this.storage.set('Listefiches', this.Listefiches)
+    }).catch(e => {
+      console.log('erreur', e)
+    })
+  }
+
+
 
   public getToken() {
     return this.token;
@@ -121,11 +152,13 @@ export class AuthentificationService {
       let isExpired = this.helper.isTokenExpired(val);
       console.log("decode", decoded);
       if (!isExpired) {
-        this.nav.navigateRoot(`/home`);
-        this.user = decoded;
         this.token = val;
+        console.log("decode", decoded);
+        console.log('tokentoken', this.token)
+        this.nav.navigateRoot(`/home`);
       } else {
         this.storage.remove('token');
+        this.storage.remove('currentUser');
         this.nav.navigateRoot(`/login`);
         this.menuCtrl.enable(false);
       }

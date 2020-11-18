@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, MenuController, ModalController } from '@ionic/angular';
+import { RestApiService } from '../rest-api.service';
 
 @Component({
   selector: 'app-liste-regions',
@@ -7,49 +8,35 @@ import { NavController, MenuController, ModalController } from '@ionic/angular';
   styleUrls: ['./liste-regions.page.scss'],
 })
 export class ListeRegionsPage implements OnInit {
-  idRegion
-  regions
-  constructor(private modalctrl: ModalController) { }
-  data = [
 
-    {
-      "id": 1,
-      "nom": "CENTRE"
-    },
-    {
-      "id": 2,
-      "nom": "LITTORAL"
-    },
-    {
-      "id": 3,
-      "nom": "NORD"
-    },
-    {
-      "id": 4,
-      "nom": "OUEST"
-    },
-    {
-      "id": 5,
-      "nom": "Paris Saclay"
-    },
-    {
-      "id": 6,
-      "nom": "SUD"
-    }
-  ]
+  constructor(private modalctrl: ModalController, private api: RestApiService) { }
 
   ngOnInit() {
-    this.idRegion = this.idRegion;
-    this.regions = this.idRegion;
-    console.log('idRegionInListeRegion', this.idRegion)
+    this.ListeRegions()
   }
 
 
   onDismiss() {
     this.modalctrl.dismiss();
   }
-  getListofRegion(nom, id) {
 
+  ListesRegions
+  ListeRegions() {
+    this.api.loadingFn()
+    this.api.ListeRegions().then(d => {
+      let data = JSON.parse(d.data);
+      this.ListesRegions = data['hydra:member'];
+      console.log('ListeRegions', this.ListesRegions)
+      this.api.dismissFn();
+      this.api.presentToast('Operation effectuée avec succes', 'medium')
+    }).catch(e => {
+      console.log('erreur', e)
+      this.api.presentToast(e.error, 'danger')
+      this.api.dismissFn();
+    })
+
+  }
+  getListofRegion(nom, id) {
     console.log('nom', nom)
     this.modalctrl.dismiss({ nom: nom, id: id });
   }

@@ -10,7 +10,10 @@ export class InfoNoeudPage implements OnInit {
 
   constructor(private modalctrl: ModalController) { }
 
+  ListesSite
   ngOnInit() {
+    this.ListesSite = this.ListesSite;
+    console.log('ListesSite', this.ListesSite)
   }
 
   onDismiss() {

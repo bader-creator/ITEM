@@ -4,10 +4,8 @@
 
 export const environment = {
   production: false,
-  url: 'http://vps654464.ovh.net/grh/web/app_dev.php/api',
-  pathavatar: 'http://vps654464.ovh.net/grh/web/avatars/',
-  pathfile: 'http://vps654464.ovh.net/grh/web/uploads/Files/',
-  urlupload: 'http://vps654464.ovh.net/grh/web/uploads/Documents/',
+  url: 'http://192.168.11.85/it-m-master/public/api',
+  pathavatar: 'http://192.168.11.85/it-m-master/public/uploads/avatars/',
 };
 
 /*
