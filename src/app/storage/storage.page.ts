@@ -16,19 +16,26 @@ export class StoragePage implements OnInit {
   constructor(private auth: AuthentificationService, private api: RestApiService, private domSanitizer: DomSanitizer, private storage: Storage, private modalctrl: ModalController, private alertCtrl: AlertController) { }
   AllSiteON = []
   AllSiteOff = []
+  iduser
   ngOnInit() {
 
   }
   ionViewWillEnter() {
+    this.StorageData()
+
+  }
+
+  StorageData() {
     this.api.loadingFn();
     this.storage.get('AllSiteON').then((val: any) => {
       if (val) {
         this.AllSiteON = val
-        console.log('AllSiteLength', this.api.AllSite)
         this.AllSiteON.forEach(element => {
-          if (element.image) {
+          if (element.image.image.changingThisBreaksApplicationSecurity) {
+            console.log('element.image.image ', element.image.image)
+            console.log('element.image.image.changingThisBreaksApplicationSecurity', element.image.image.changingThisBreaksApplicationSecurity)
+          } else {
             element.image.image = this.domSanitizer.bypassSecurityTrustResourceUrl(element.image.image);
-            console.log('element.image.image', element.image.image)
           }
         });
       }
@@ -36,7 +43,7 @@ export class StoragePage implements OnInit {
       this.api.dismissFn();
       this.api.presentToast('Operation effectuée avec succes', 'medium')
     }).catch(e => {
-      console.log('erreur', e)
+      //console.log('erreur', e)
       this.api.dismissFn();
       this.api.presentToast(e.error, 'danger')
     })
@@ -44,17 +51,20 @@ export class StoragePage implements OnInit {
     this.storage.get('AllSiteOff').then((val: any) => {
       if (val) {
         this.AllSiteOff = val
-        console.log('AllSiteOff', this.AllSiteOff)
+        //console.log('AllSiteOff', this.AllSiteOff)
         this.AllSiteOff.forEach(element => {
-          if (element.image) {
+          if (element.image.image.changingThisBreaksApplicationSecurity) {
+            console.log('element.image.image.changingThisBreaksApplicationSecurity', element.image.image.changingThisBreaksApplicationSecurity)
+          } else {
             element.image.image = this.domSanitizer.bypassSecurityTrustResourceUrl(element.image.image);
-            console.log('element.image.image', element.image.image)
+            // console.log('element.image.image', element.image.image)
           }
         });
       }
     })
     this.storage.get('currentUser').then((val) => {
-      this.ListSite(val.id)
+      this.iduser = val.id;
+      //this.ListSite(this.iduser)
     });
   }
 
@@ -65,9 +75,10 @@ export class StoragePage implements OnInit {
   ionViewWillLeave() {
     this.AllSiteOff = [];
     this.AllSiteON = [];
+    this.api.dismissFn();
   }
-
-  async presentConfirm() {
+  Reponses = []
+  async presentConfirm(site) {
     let alert = await this.alertCtrl.create({
       header: 'Check Site',
 
@@ -76,13 +87,43 @@ export class StoragePage implements OnInit {
           text: 'CANCEL',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            // console.log('Cancel clicked');
           }
         },
         {
           text: 'OK',
           handler: () => {
-            console.log('Buy clicked');
+            this.api.loadingFn();
+            this.storage.get('AllReponsesOff').then((val: any) => {
+              if (val) {
+                val.forEach(element => {
+                  console.log('element.IdSite', element.IdSite)
+                  console.log('site.IdSite', site.IdSite)
+                  if (element.IdSite == site.IdSite) {
+                    this.Reponses.push(element)
+                  }
+                });
+              }
+            }).then(d => {
+              this.api.SendData(this.Reponses, this.iduser).subscribe(data => {
+                console.log('data', data)
+                console.log('Reponses', this.Reponses)
+                this.api.dismissFn();
+                this.api.presentToast('Operation effectuée avec succes', 'medium')
+                this.Reponses = []
+
+              }), err => {
+                console.log("error", err)
+                this.api.dismissFn();
+                this.api.presentToast('Erreur', 'danger')
+                this.Reponses = []
+              }
+            }).catch(e => {
+              console.log("eeee", e)
+              this.api.dismissFn();
+              this.api.presentToast('Erreur', 'danger')
+            })
+
           }
         }
       ]
@@ -91,6 +132,7 @@ export class StoragePage implements OnInit {
   }
 
   async ConfirmSupperssion(IdSite, mode) {
+    console.log('AllSiteON', this.AllSiteON)
     const alert = await this.alertCtrl.create({
       header: 'Confirm!',
       buttons: [
@@ -103,32 +145,43 @@ export class StoragePage implements OnInit {
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('mode', mode)
+            // console.log('mode', mode)
             if (mode == "OnLine") {
+              this.api.loadingFn()
+              this.storage.get('AllSiteON').then((val: any) => {
 
-              this.AllSiteON.forEach(element => {
-                if (element.IdSite == IdSite) {
-                  const index = this.AllSiteON.indexOf(element);
-                  if (index > -1) {
-                    this.AllSiteON.splice(index, 1);
+                val.forEach(element => {
+                  if (element.IdSite == IdSite) {
+                    const index = val.indexOf(element);
+                    if (index > -1) {
+                      val.splice(index, 1);
+                    }
                   }
+                });
+                this.storage.set('AllSiteON', val).then(d => {
+                  this.api.dismissFn()
+                  this.StorageData()
+                })
+              })
 
-                }
-              });
-              this.storage.set('AllSiteON', this.AllSiteON)
             } else {
-              this.AllSiteOff.forEach(element => {
-                if (element.IdSite == IdSite) {
-                  const index = this.AllSiteOff.indexOf(element);
-                  if (index > -1) {
-                    this.AllSiteOff.splice(index, 1);
+              this.api.loadingFn()
+              this.storage.get('AllSiteOff').then((val: any) => {
+                val.forEach(element => {
+                  if (element.IdSite == IdSite) {
+                    const index = val.indexOf(element);
+                    if (index > -1) {
+                      val.splice(index, 1);
+                    }
                   }
+                })
+                this.storage.set('AllSiteOff', val).then(d => {
+                  this.api.dismissFn()
+                  this.StorageData()
+                })
+              })
 
-                }
-              });
-              this.storage.set('AllSiteOff', this.AllSiteOff)
             }
-
           }
         }
       ]
@@ -138,7 +191,7 @@ export class StoragePage implements OnInit {
   }
 
   async ModifierNom(IdSite) {
-    console.log('IdSite', IdSite)
+
     const modal = await this.modalctrl.create({
       component: EditInfoSitePage,
       cssClass: 'Siteinfo',
@@ -147,29 +200,37 @@ export class StoragePage implements OnInit {
       }
     })
     modal.present();
+
+    await modal.onWillDismiss()
+    this.StorageData();
+
   }
 
 
-  Sites = []
-  ListSite(idDestinataire) {
-    this.api.Listnoeud_acceptances(idDestinataire).then(d => {
+  Sites
+  SendOffLine(idFichier, site) {
+    this.api.loadingFn()
+    this.api.ListSites(idFichier, this.iduser).then(d => {
       let data = JSON.parse(d.data);
-      data["hydra:member"].forEach(element => {
-        this.Sites.push(element.site)
-      });
+      console.log("Sites", this.Sites);
+      this.Sites = data.site;
+      console.log("Sites", this.Sites);
+      this.api.dismissFn()
+      this.PresentAlert(site);
     }).catch(e => {
       console.log('erreur', e)
+      this.api.dismissFn()
       this.api.presentToast('Erreur', 'danger')
     })
   }
 
-  async SendOffLine() {
+  async PresentAlert(site) {
     let inputs = []
     this.Sites.forEach(element => {
       inputs.push({
         type: "radio",
         label: element.name,
-        value: element.id,
+        value: element.name,
       })
     });
     let alert = await this.alertCtrl.create({
@@ -180,18 +241,55 @@ export class StoragePage implements OnInit {
           text: 'CANCEL',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            //console.log('Cancel clicked');
           }
         },
         {
           text: 'SEND',
-          handler: () => {
-            console.log('Buy clicked');
+          handler: (data) => {
+            console.log('data', data)
+            console.log('site.nom', site.nom)
+            if (data != site.nom) {
+              this.api.presentToast('Merci de vérifier le nom de site', 'danger')
+            } else {
+              this.api.loadingFn();
+              this.storage.get('AllReponsesOff').then((val: any) => {
+                if (val) {
+                  val.forEach(element => {
+                    console.log('element.IdSite', element.IdSite)
+                    if (element.IdSite == site.IdSite) {
+                      this.Reponses.push(element)
+                    }
+                  });
+                }
+              }).then(d => {
+                this.api.SendData(this.Reponses, this.iduser).subscribe(data => {
+                  console.log('data', data)
+                  console.log('Reponses', this.Reponses)
+                  this.api.dismissFn();
+                  this.api.presentToast('Operation effectuée avec succes', 'medium')
+                  this.Reponses = []
+
+                }), err => {
+                  console.log("error", err)
+                  this.api.dismissFn();
+                  this.api.presentToast('Erreur', 'danger')
+                  this.Reponses = []
+                }
+              }).catch(e => {
+                console.log("eeee", e)
+                this.api.dismissFn();
+                this.api.presentToast('Erreur', 'danger')
+              })
+            }
+
           }
         }
       ]
     });
     alert.present();
+
   }
+
 
 }

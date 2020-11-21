@@ -19,6 +19,8 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { GalleryNoeudPage } from './gallery-noeud/gallery-noeud.page'
+import { HttpClientModule } from '@angular/common/http';
+
 export function tokenGetter() {
   return localStorage.getItem("access_token");
 }
@@ -31,6 +33,7 @@ export function tokenGetter() {
     SuperTabsModule.forRoot(),
     IonicStorageModule.forRoot(),
     BrowserAnimationsModule,
+    HttpClientModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

@@ -24,8 +24,10 @@ export class HomePage {
       this.Listnoeud_acceptances(this.User.id)
     });
     this.storage.get('AllSiteON').then((val: any) => {
-      this.StorageCount = val.length
-      console.log('StorageCount', this.StorageCount)
+      if (val) {
+        this.StorageCount = val.length
+        console.log('StorageCount', this.StorageCount)
+      }
     })
 
     this.storage.get('AllSiteOff').then((val: any) => {

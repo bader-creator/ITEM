@@ -4,6 +4,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { AlertController, MenuController, NavController, LoadingController, ToastController } from '@ionic/angular';
 import { AuthentificationService } from './authentification.service';
 import { Storage } from "@ionic/storage";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { Storage } from "@ionic/storage";
 export class RestApiService {
 
   AllSite
-  constructor(private nav: NavController, private authService: AuthentificationService, private storage: Storage, private http: HTTP, private loadingController: LoadingController, private alertController: AlertController, private toastController: ToastController) { }
+  constructor(private nav: NavController, private httpClient: HttpClient, private authService: AuthentificationService, private storage: Storage, private http: HTTP, private loadingController: LoadingController, private alertController: AlertController, private toastController: ToastController) { }
 
   isLoading = false;
   async loadingFn() {
@@ -72,6 +73,31 @@ export class RestApiService {
         Authorization: "Bearer " + this.authService.getToken(),
       }
     );
+  }
+  ListSites(idFichier, iduser) {
+    return this.http.get(`${environment.url}/ListSites/` + idFichier + '/' + iduser,
+      {},
+      {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.authService.getToken(),
+      }
+    );
+  }
+
+  SendData(data, iduser) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.authService.getToken()
+      }),
+    };
+    return this.httpClient.post(
+      `${environment.url}/sendResponse/` + iduser,
+      data,
+      httpOptions
+    );
+
+
   }
 
 

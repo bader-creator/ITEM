@@ -14,14 +14,15 @@ export class CommentesQuizzPage implements OnInit {
   }
 
   constructor(private modalctrl: ModalController, private storage: Storage, private alertController: AlertController) {
-    this.ii = setInterval(() => {
-      this.getComments();
-
-    }, 2000);
+    /* this.ii = setInterval(() => {
+       this.getComments();
+ 
+     }, 2000);*/
   }
   idQuestion
   ngOnInit() {
     this.idQuestion = this.idQuestion
+    this.getComments();
 
   }
 

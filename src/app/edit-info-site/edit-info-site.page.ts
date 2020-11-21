@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { RestApiService } from '../rest-api.service';
 
@@ -10,7 +10,7 @@ import { RestApiService } from '../rest-api.service';
 })
 export class EditInfoSitePage implements OnInit {
 
-  constructor(private modalctrl: ModalController, private storage: Storage, private api: RestApiService) { }
+  constructor(private modalctrl: ModalController, private nav: NavController, private storage: Storage, private api: RestApiService) { }
   IdSite
   Site
   name
@@ -48,10 +48,12 @@ export class EditInfoSitePage implements OnInit {
     }).then(d => {
       this.api.dismissFn();
       this.api.presentToast('Operation effectuée avec succes', 'medium')
+      this.modalctrl.dismiss();
     }).catch(e => {
       console.log('erreur', e)
       this.api.dismissFn();
       this.api.presentToast(e.error, 'danger')
+      this.modalctrl.dismiss();
     })
   }
 

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { RestApiService } from '../rest-api.service';
 
 @Component({
   selector: 'app-gallery-site',
@@ -13,11 +14,23 @@ export class GallerySitePage implements OnInit {
   Question
   images = []
   idQuestion
-  constructor(private storage: Storage, private sanitizer: DomSanitizer, private alertController: AlertController, private modalctrl: ModalController) { }
+  constructor(private storage: Storage, private api: RestApiService, private sanitizer: DomSanitizer, private alertController: AlertController, private modalctrl: ModalController) { }
 
   ngOnInit() {
     this.idQuestion = this.idQuestion;
     console.log('idQuestion', this.idQuestion)
+    this.StorageImages()
+
+  }
+  ionViewWillLeave() {
+    this.images = [];
+  }
+
+  onDismiss() {
+    this.modalctrl.dismiss();
+  }
+
+  StorageImages() {
     this.storage.get('images').then((val: any) => {
       console.log('val', val)
       if (val) {
@@ -29,18 +42,17 @@ export class GallerySitePage implements OnInit {
       }
       console.log('this.images', this.images)
       this.images.forEach(element => {
-        element.imageData = this.sanitizer.bypassSecurityTrustUrl(element.imageData)
+        if (element.imageData.changingThisBreaksApplicationSecurity) {
+
+        } else {
+          element.imageData = this.sanitizer.bypassSecurityTrustUrl(element.imageData)
+        }
+
       });
 
     });
   }
-  ionViewWillLeave() {
-    this.images = [];
-  }
-
-  onDismiss() {
-    this.modalctrl.dismiss();
-  }
+  pictures = [];
   async ConfirmSupperssion(index) {
     const alert = await this.alertController.create({
       header: 'Confirm!',
@@ -55,10 +67,18 @@ export class GallerySitePage implements OnInit {
           text: 'Okay',
           handler: () => {
             console.log('index', index);
-            if (index > -1) {
-              this.images.splice(index, 1);
-            }
-            this.storage.set('images', this.images)
+            this.api.loadingFn()
+            this.storage.get('images').then((val: any) => {
+              if (index > -1) {
+                this.images.splice(index, 1);
+                val.splice(index, 1);
+              }
+              this.storage.set('images', val).then(d => {
+                this.api.dismissFn()
+              })
+            })
+
+
           }
         }
       ]

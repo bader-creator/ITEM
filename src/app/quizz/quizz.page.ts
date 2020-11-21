@@ -28,12 +28,13 @@ export class QuizzPage implements OnInit {
     "longitude": null,
     "latitude": null,
     "image": null,
-    "date": null
+    "date": null,
+    "idfichier": null
   }
   mode
   AllQuestion = []
   Question = {
-    "id": 1,
+    "id": null,
     "image": [],
     "repInput": null,
     "repSelect": null,
@@ -73,6 +74,7 @@ export class QuizzPage implements OnInit {
     }
     else if (this.mode == "OffLine") {
       this.idFichier = this.idFichier
+      this.site.idfichier = this.idFichier
       console.log('this.idFichier = this.idFichier', this.idFichier)
     }
     this.storage.get('Listefiches').then((val) => {
@@ -148,7 +150,8 @@ export class QuizzPage implements OnInit {
   ionViewWillLeave() {
     this.currentSlide = 0;
     this.allSlide = 0;
-    this.platform.backButton.observers.pop();;
+    this.platform.backButton.observers.pop();
+    this.modalctrl.dismiss();
   }
 
   ngAfterViewInit() {
@@ -332,7 +335,7 @@ export class QuizzPage implements OnInit {
         this.images = val
 
         this.Reponses.forEach(reponse => {
-          let data = { 'idFiche': null, 'IdSite': null, 'id': null, 'type': null, 'reponse': null, 'comments': [], 'images': [] }
+          let data = { 'idFiche': null, 'IdSite': null, 'date': null, 'id': null, 'type': null, 'reponse': null, 'comments': [], 'images': [] }
           if (this.Allcomments) {
             this.Allcomments.forEach(comment => {
               if (comment.idQuestion == reponse.id) {
@@ -351,7 +354,8 @@ export class QuizzPage implements OnInit {
           if (this.mode == "OnLine") {
             console.log("OnLine")
             data.idFiche = this.data.IdFiche
-            data.IdSite = this.site.id
+            data.IdSite = this.site.IdSite
+            data.date = new Date().toISOString()
             data.id = reponse.id
             data.type = reponse.type
             data.reponse = reponse.reponse
@@ -362,6 +366,8 @@ export class QuizzPage implements OnInit {
           else {
             console.log("OffLine")
             data.idFiche = this.idFichier
+            data.IdSite = this.site.IdSite
+            data.date = new Date().toISOString()
             data.id = reponse.id
             data.type = reponse.type
             data.reponse = reponse.reponse
@@ -436,7 +442,6 @@ export class QuizzPage implements OnInit {
         this.storage.remove('imagsite');
         this.api.dismissFn();
         this.api.presentToast('Operation effectuée avec succes', 'medium')
-
       }
     }, 2000);
 
@@ -463,10 +468,14 @@ export class QuizzPage implements OnInit {
           handler: (type = "storage") => {
             try {
               this.GetResponse(type)
-              this.modalctrl.dismiss();
-              setTimeout(() => {
-                this.nav.navigateRoot(`/storage`);
-              }, 2000);
+              this.modalctrl.dismiss().then(
+                d => {
+                  setTimeout(() => {
+                    this.nav.navigateRoot(`/storage`);
+                  }, 2000);
+                }
+              )
+
 
             } catch (error) {
               console.log('error', error)
