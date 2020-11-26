@@ -5,8 +5,9 @@
 export const environment = {
   production: false,
   url: 'http://192.168.11.85/it-m-master/public/api',
-  urlapi: 'http://192.168.11.85/it-m-master/public',
   pathavatar: 'http://192.168.11.85/it-m-master/public/uploads/avatars/',
+  //pathfile: 'http://192.168.11.85/grh/web/uploads/Files',
+
 };
 
 /*

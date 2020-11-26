@@ -6,6 +6,10 @@ label {
     float: left;
 }
 
+.hide {
+    display: none;
+}
+
 .lengthSlide {
     position: absolute;
     bottom: 30px;
@@ -14,6 +18,11 @@ label {
     font-weight: 700;
     line-height: 3px;
     color: #2b2424bd;
+}
+
+ion-select {
+    border: 0.7px solid;
+    border-radius: 4px;
 }
 
 .champoblig {

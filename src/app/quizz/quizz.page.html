@@ -76,14 +76,28 @@
                         <ion-card-header style="height: 53px;" style="background-color: #c0c3ef;">
                             <div class="row">
                                 <div style="margin-left: 5px;">
-                                    <ng-container *ngIf="this?.Question?.repSelect">
-                                        <ion-icon name="happy" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: rgb(83, 145, 83);">
+                                    <ng-container *ngIf='question.type==1'>
+                                        <!-- <ng-container *ngIf="this?.infodata && !this?.champObligatoire"> -->
+                                        <ion-icon name="happy" id="{{question.id}}happy" class="hide" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: rgb(83, 145, 83); ">
                                         </ion-icon>
-                                    </ng-container>
-                                    <ng-container *ngIf="!this?.Question?.repSelect">
-                                        <ion-icon name="sad" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: #a03434;">
+                                        <!-- </ng-container> -->
+                                        <!-- <ng-container *ngIf="!this?.infodata && this?.champObligatoire"> -->
+                                        <ion-icon name="sad" id="{{question.id}}sad" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: #a03434; ">
                                         </ion-icon>
+                                        <!-- </ng-container> -->
                                     </ng-container>
+                                    <ng-container *ngIf='question.type==0'>
+                                        <!-- <ng-container *ngIf="this?.infodata && !this?.champObligatoire"> -->
+                                        <ion-icon name="happy" id="{{question.id}}happy" class="hide" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: rgb(83, 145, 83); ">
+                                        </ion-icon>
+                                        <!-- </ng-container> -->
+                                        <!-- <ng-container *ngIf="!this?.infodata && this?.champObligatoire"> -->
+                                        <ion-icon name="sad" id="{{question.id}}sad" style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: #a03434; ">
+                                        </ion-icon>
+                                        <!-- </ng-container> -->
+                                    </ng-container>
+
+
 
                                     <ion-label *ngIf='question.criticity==0' style="font-size: 16px;color: black;">Question {{i+1}} (Mineure)</ion-label>
                                     <ion-label *ngIf='question.criticity==1' style="font-size: 16px;color: black;">Question {{i+1}} (Majeure)</ion-label>
@@ -114,14 +128,14 @@
                             <div class="container-fluid">
                                 <ng-container *ngIf='question.type==0'>
                                     <div class="form-group">
-                                        <select class="browser-default custom-select" id="{{question.id}}ResponseSelect">
-                                           <option *ngFor='let c of question.choix' value="{{c.id}}">{{c.label}}</option>
-                                        </select>
+                                        <ion-select (ionChange)="onSelectChange($event,question.id)" id="{{question.id}}ResponseSelect">
+                                            <ion-select-option *ngFor='let c of question.choix' [value]="c?.id">{{c.label}}</ion-select-option>
+                                        </ion-select>
                                     </div>
                                 </ng-container>
                                 <ng-container *ngIf='question.type==1'>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="{{question.id}}ResponseInput">
+                                        <input type="text" class="form-control" (keyup)="change($event,question.id)" id="{{question.id}}ResponseInput">
                                     </div>
                                 </ng-container>
                             </div>

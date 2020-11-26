@@ -29,7 +29,8 @@ export class QuizzPage implements OnInit {
     "latitude": null,
     "image": null,
     "date": null,
-    "idfichier": null
+    "idfichier": null,
+    "idTicket": null
   }
   mode
   AllQuestion = []
@@ -50,6 +51,7 @@ export class QuizzPage implements OnInit {
   data
   Fiches = []
   logger = true
+  iduser
   constructor(private modalctrl: ModalController, private auth: AuthentificationService, private geolocation: Geolocation,
     private storage: Storage, private platform: Platform, public FilePath: FilePath, private api: RestApiService, public FileChooser: FileChooser, public Base64: Base64, public Camera: Camera, private alertCtrl: AlertController, private nav: NavController) {
 
@@ -64,13 +66,19 @@ export class QuizzPage implements OnInit {
 
 
   ngOnInit() {
-    this.data = this.data;
     this.mode = this.mode
     console.log('mode', this.mode)
     if (this.mode == "OnLine") {
+      this.data = this.data;
+      console.log('datadatadatadata', this.data)
       this.site.IdSite = this.data.IdSite;
       this.site.nom = this.data.SIteName;
       this.site.id = this.data.id
+      this.site.idTicket = this.data.idTicket
+      this.storage.get('currentUser').then((val) => {
+        console.log('val', val);
+        this.iduser = val.id;
+      });
     }
     else if (this.mode == "OffLine") {
       this.idFichier = this.idFichier
@@ -110,7 +118,7 @@ export class QuizzPage implements OnInit {
           });
         });
       });
-      console.log('Questions', this.Questions)
+
 
     });
 
@@ -144,6 +152,7 @@ export class QuizzPage implements OnInit {
       this.currentSlide = index;
 
     });
+
 
   }
 
@@ -212,6 +221,7 @@ export class QuizzPage implements OnInit {
     })
     modal.present();
   }
+
 
   async GoesTOCommentes(idQuestion) {
     const modal = await this.modalctrl.create({
@@ -305,6 +315,46 @@ export class QuizzPage implements OnInit {
     })
   }
 
+  change(event, id) {
+    this.change_happy(event, id);
+  }
+
+
+  change_happy(event, id) {
+
+    let valieinfo = event.target.id;
+    let infodata = (<HTMLInputElement>document.getElementById(valieinfo)).value;
+
+
+    if (infodata.length) {
+      (<HTMLInputElement>document.getElementById(`${id}happy`)).classList.remove('hide');
+      (<HTMLInputElement>document.getElementById(`${id}sad`)).classList.add('hide');
+      return true;
+    }
+    (<HTMLInputElement>document.getElementById(`${id}happy`)).classList.add('hide');
+    (<HTMLInputElement>document.getElementById(`${id}sad`)).classList.remove('hide');
+    return false;
+  }
+
+  selectid
+  infoselect
+  onSelectChange(event, id) {
+    console.log('event', event)
+    let valieinfo = event.target.id;
+    let infodata = (<HTMLInputElement>document.getElementById(valieinfo)).value;
+    if (infodata) {
+      (<HTMLInputElement>document.getElementById(`${id}happy`)).classList.remove('hide');
+      (<HTMLInputElement>document.getElementById(`${id}sad`)).classList.add('hide');
+      return true;
+    }
+    (<HTMLInputElement>document.getElementById(`${id}happy`)).classList.add('hide');
+    (<HTMLInputElement>document.getElementById(`${id}sad`)).classList.remove('hide');
+    return false;
+
+  }
+
+
+
   AllReponsesON = []
   AllReponsesOff = []
   images = []
@@ -316,12 +366,20 @@ export class QuizzPage implements OnInit {
     this.Questions.forEach(element => {
       let Reponse = { 'id': null, 'type': null, 'reponse': null }
       if (element.type == 1) {
-        Reponse.reponse = (<HTMLInputElement>document.getElementById(element.id + "" + "ResponseInput")).value;
+        if ((<HTMLInputElement>document.getElementById(element.id + "" + "ResponseInput")).value) {
+          Reponse.reponse = (<HTMLInputElement>document.getElementById(element.id + "" + "ResponseInput")).value;
+        } else {
+          Reponse.reponse = null
+        }
         Reponse.id = element.id;
         Reponse.type = element.type;
         this.Reponses.push(Reponse)
       } else if (element.type == 0) {
-        Reponse.reponse = (<HTMLInputElement>document.getElementById(element.id + "" + "ResponseSelect")).value;
+        if ((<HTMLInputElement>document.getElementById(element.id + "" + "ResponseSelect")).value) {
+          Reponse.reponse = (<HTMLInputElement>document.getElementById(element.id + "" + "ResponseSelect")).value;
+        } else {
+          Reponse.reponse = null
+        }
         Reponse.id = element.id;
         Reponse.type = element.type;
         this.Reponses.push(Reponse)
@@ -403,11 +461,35 @@ export class QuizzPage implements OnInit {
     }
     setTimeout(() => {
       if (type == "serveur") {
-        this.storage.remove('CommentQuizz');
-        this.storage.remove('images');
-        this.storage.remove('imagsite');
-        this.api.dismissFn();
-        this.api.presentToast('Operation effectuée avec succes', 'medium')
+        if (this.auth.connected == false) {
+          this.api.presentToast('Impossible d’établir une connexion ', "danger");
+          this.api.dismissFn();
+        } else {
+          let DataSite = { 'site': null, data: null }
+          DataSite.site = this.site;
+          DataSite.data = this.AllReponsesON;
+          console.log('DataSite', DataSite)
+          this.api.SendData(DataSite, this.iduser).subscribe((data) => {
+            console.log('DataSite', DataSite)
+            this.api.dismissFn();
+            this.AllReponsesON = []
+            DataSite = { 'site': null, data: null }
+            this.storage.remove('CommentQuizz');
+            this.storage.remove('images');
+            this.storage.remove('imagsite');
+            this.api.presentToast('Operation effectuée avec succes', 'medium').then(d => {
+              this.modalctrl.dismiss();
+              this.nav.navigateRoot(`/audit`);
+            })
+          }, (err) => {
+            console.log("error", err)
+            this.api.presentToast('Erreur', 'danger')
+            this.api.dismissFn();
+            this.AllReponsesON = []
+            DataSite = { 'site': null, data: null }
+          });
+
+        }
       }
       if (type == "storage") {
         if (this.mode == "OnLine") {

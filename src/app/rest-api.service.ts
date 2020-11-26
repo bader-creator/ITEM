@@ -5,6 +5,7 @@ import { AlertController, MenuController, NavController, LoadingController, Toas
 import { AuthentificationService } from './authentification.service';
 import { Storage } from "@ionic/storage";
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
+import { EditInfoSitePage } from './edit-info-site/edit-info-site.page';
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +15,22 @@ export class RestApiService {
   AllSite
   constructor(private nav: NavController, private httpClient: HttpClient, private authService: AuthentificationService, private storage: Storage, private http: HTTP, private loadingController: LoadingController, private alertController: AlertController, private toastController: ToastController) { }
 
-  isLoading = false;
+
   async loadingFn() {
-    this.isLoading = true;
-    return await this.loadingController.create({
-      message: "Chargement ..."
-    }).then(a => {
-      a.present().then(() => {
-        console.log('presented');
-        if (!this.isLoading) {
-          a.dismiss().then(() => console.log('abort presenting'));
-        }
-      });
+    this.loadingController.create({
+      message: 'Please wait...',
+      spinner: 'bubbles',
+    }).then((res) => {
+      res.present();
     });
   }
+
   async dismissFn() {
-    this.isLoading = false;
-    return await this.loadingController.dismiss().then(() => console.log('dismissed'));
+    this.loadingController.dismiss().then((res) => {
+      console.log('Loading dismissed!', res);
+    }).catch((error) => {
+      console.log('error', error);
+    });
   }
 
   async presentToast(msg: string, color: string) {
@@ -91,13 +91,17 @@ export class RestApiService {
         Authorization: "Bearer " + this.authService.getToken()
       }),
     };
-    return this.httpClient.post(
-      `${environment.url}/sendResponse/` + iduser,
-      data,
-      httpOptions
+    return this.httpClient.post(`${environment.url}/sendResponse/` + iduser, data, httpOptions);
+  }
+
+  InfoSite(idSite) {
+    return this.http.get(`${environment.url}/InfoSite/` + idSite,
+      {},
+      {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.authService.getToken(),
+      }
     );
-
-
   }
 
 

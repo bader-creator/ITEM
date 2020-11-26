@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthentificationService } from '../authentification.service';
 import { ModalController } from '@ionic/angular';
 import { ListeRegionsPage } from '../liste-regions/liste-regions.page'
-import { InfoNoeudPage } from '../info-noeud/info-noeud.page';
 import { RestApiService } from '../rest-api.service';
 
 @Component({
@@ -97,15 +96,5 @@ export class NoeudPage implements OnInit {
 
 
   }
-  async GoesTODetail() {
-    const modal = await this.modalctrl.create({
-      component: InfoNoeudPage,
-      componentProps: {
-        ListesSite: this.ListesSite,
-      },
-    })
-    modal.present();
 
-
-  }
 }

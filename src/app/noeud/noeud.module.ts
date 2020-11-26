@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { NoeudPageRoutingModule } from './noeud-routing.module';
 import { ListeRegionsPage } from '../liste-regions/liste-regions.page'
 import { NoeudPage } from './noeud.page';
-import { InfoNoeudPage } from '../info-noeud/info-noeud.page';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +14,7 @@ import { InfoNoeudPage } from '../info-noeud/info-noeud.page';
     IonicModule,
     NoeudPageRoutingModule
   ],
-  declarations: [NoeudPage, ListeRegionsPage, InfoNoeudPage],
-  entryComponents: [ListeRegionsPage, InfoNoeudPage],
+  declarations: [NoeudPage, ListeRegionsPage],
+  entryComponents: [ListeRegionsPage],
 })
 export class NoeudPageModule { }

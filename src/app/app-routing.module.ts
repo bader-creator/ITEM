@@ -27,7 +27,7 @@ const routes: Routes = [
     loadChildren: () => import('./google-maps/google-maps.module').then(m => m.GoogleMapsPageModule)
   },
   {
-    path: 'btsacceptance',
+    path: 'btsacceptance/:idSite',
     loadChildren: () => import('./btsacceptance/btsacceptance.module').then(m => m.BTSAcceptancePageModule)
   },
   {

@@ -1,96 +1,74 @@
 <ion-header>
-  <ion-toolbar color="secondary">
-    <ion-title style="color:white;font-family: Roboto;
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
     font-weight: 700;
     line-height: 58px;
-    text-align: center;">BTS Acceptance infos</ion-title>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button fill="solid" style="font-size: 18px;" [routerLink]="'/home'" routerDirection="forward"
-        color="secondary">
-        <ion-icon slot="start" name="home"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    text-align: center;" *ngIf="details">{{details[0]?.site?.name}}</ion-title>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" (click)="GoToMaps(details[0]?.site?.latitude,details[0]?.site?.longitude)" color="secondary">
+                <ion-icon slot="start" name="location"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="banner">
-    <div class="profile">
-      <div class="content-profile">
-        <ion-card color="secondary">
-          <ion-card-content>
-            <div class="row" style="margin-bottom: 15px;">
-              <ion-label style="margin-left: 14px;">Recetteur</ion-label>
-              <ion-label style="position: absolute;right: 63px;">Audit Date</ion-label>
-            </div>
-            <div class="row">
-              <ion-label style="margin-left: 14px;">Ali Tabbabi</ion-label>
-              <ion-label style="position: absolute;right: 58px;">2019-12-12</ion-label>
-            </div>
-          </ion-card-content>
-        </ion-card>
-      </div>
-    </div>
-  </div>
-  <ion-card style="margin-top: 45px;">
-    <ion-card-header>
-      <ion-label style="font-size: 20px;"><b>Generality</b></ion-label>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item>
-        <ion-label style="font-size:15px;">Chef de Projet : Adel Arfi</ion-label>
-      </ion-item>
-    </ion-card-content>
+    <ng-container *ngIf="details">
+        <h5 *ngIf="details?.length == 0 " style="text-align: center; margin-top: 30%">No Information
+        </h5>
+        <ion-card *ngFor="let detail of details">
+            <ion-card-header>
+                <div class="row" style="border-bottom: 2px groove;margin-bottom: -16px;">
+                    <div class="col-2">
+                        <ion-icon name="cloud-download" style="font-size: 24px;color: #25368c;"></ion-icon>
+                    </div>
+                    <div class="col-8" style="text-align: center;">
+                    </div>
+                    <div class="col-2">
+                        <a href="{{env}}{{detail.path}}" download="att">
+                            <ion-icon name="images" style="font-size: 24px;color: #25368c;"></ion-icon>
+                        </a>
+                    </div>
+                </div>
+            </ion-card-header>
+            <ion-card-content>
+                <div class="row" style="margin-top: 24px; place-content: center;">
+                    <div class="col-6">
+                        <ion-label>Chef de projet :</ion-label>
+                    </div>
+                    <div class="col-6">
+                        <label>{{detail.userCreator.lastName}} {{detail.userCreator.firstName}}</label>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 18px; place-content: center;">
+                    <div class="col-6">
+                        <ion-label>Auditeur :</ion-label>
+                    </div>
+                    <div class="col-6">
+                        <label>{{detail.userDestinator.lastName}} {{detail.userDestinator.firstName}}</label>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 18px; place-content: center;">
+                    <div class="col-6">
+                        <ion-label>Nom de fiche :</ion-label>
+                    </div>
+                    <div class="col-6">
+                        <label>{{detail.fiche.label}}</label>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 18px; place-content: center;">
+                    <div class="col-6">
+                        <ion-label>Date audit :</ion-label>
+                    </div>
+                    <div class="col-6">
+                        <label>{{detail.dateCreation.date | date: 'dd-MM-yyyy HH:mm'}}</label>
+                    </div>
+                </div>
 
-  </ion-card>
-  <ion-card>
-    <ion-card-header>
-      <ion-label style="font-size: 20px;"><b>NC MOE AMENAGEUR</b></ion-label>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="row" style="margin-bottom: 7px;border-bottom: 1px groove;">
-        <div class="col-6">
-          <ion-label style="color: #25368c;font-size: 17px;">Categorie</ion-label>
-        </div>
-        <div class="col-6">
-          <ion-label style="color: #25368c;font-size: 17px;">Valeur</ion-label>
-        </div>
-      </div>
-      <div class="row" style="margin-bottom: 7px;border-bottom: 1px groove;">
-        <div class="col-6">
-          <ion-label style="font-size:15px;color: black;">Global</ion-label>
-        </div>
-        <div class="col-6">
-          <ion-label style="font-size:15px;color: black;">4</ion-label>
-        </div>
-      </div>
-      <div class="row" style="margin-bottom: 7px;border-bottom: 1px groove;">
-        <div class="col-6">
-          <ion-label style="font-size:15px;color: black;">Mineure</ion-label>
-        </div>
-        <div class="col-6">
-          <ion-label style="font-size:15px;color: black;">0</ion-label>
-        </div>
-      </div>
-      <div class="row" style="margin-bottom: 7px;border-bottom: 1px groove;">
-        <div class="col-6">
-          <ion-label style="font-size:15px;color: black;">Majeure</ion-label>
-        </div>
-        <div class="col-6">
-          <ion-label style="font-size:15px;color: black;">3</ion-label>
-        </div>
-      </div>
-      <div class="row" style="margin-bottom: 7px;">
-        <div class="col-6">
-          <ion-label style="font-size:15px;color: black;">Bloquante</ion-label>
-        </div>
-        <div class="col-6">
-          <ion-label style="font-size:15px;color: black;">1</ion-label>
-        </div>
-      </div>
-    </ion-card-content>
-  </ion-card>
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
 </ion-content>

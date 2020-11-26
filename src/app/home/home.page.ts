@@ -18,6 +18,9 @@ export class HomePage {
   User
   StorageCount
   ngOnInit() {
+
+  }
+  ionViewWillEnter() {
     this.storage.get('currentUser').then((val) => {
       this.User = val;
       console.log('User', this.User)
@@ -28,15 +31,14 @@ export class HomePage {
         this.StorageCount = val.length
         console.log('StorageCount', this.StorageCount)
       }
+    }).then(d => {
+      this.storage.get('AllSiteOff').then((val: any) => {
+        if (val) {
+          this.StorageCount = this.StorageCount + val.length
+          console.log('StorageCount', this.StorageCount)
+        }
+      })
     })
-
-    this.storage.get('AllSiteOff').then((val: any) => {
-      if (val) {
-        this.StorageCount = this.StorageCount + val.length
-        console.log('StorageCount', this.StorageCount)
-      }
-    })
-
   }
 
   AuditCount

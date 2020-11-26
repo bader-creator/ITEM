@@ -52,8 +52,8 @@ export class AuditPage implements OnInit {
   }
 
 
-  async GoesTOuizz(id, IdSite, SIteName, IdFiche) {
-    let data = { 'id': id, 'IdSite': IdSite, 'SIteName': SIteName, 'IdFiche': IdFiche }
+  async GoesTOuizz(id, IdSite, SIteName, IdFiche, idTicket) {
+    let data = { 'id': id, 'IdSite': IdSite, 'SIteName': SIteName, 'IdFiche': IdFiche, 'idTicket': idTicket }
     console.log('data', data)
     const modal = await this.modalctrl.create({
       component: QuizzPage,

@@ -93,37 +93,41 @@ export class StoragePage implements OnInit {
         {
           text: 'OK',
           handler: () => {
-            this.api.loadingFn();
-            this.storage.get('AllReponsesOff').then((val: any) => {
-              if (val) {
-                val.forEach(element => {
-                  console.log('element.IdSite', element.IdSite)
-                  console.log('site.IdSite', site.IdSite)
-                  if (element.IdSite == site.IdSite) {
-                    this.Reponses.push(element)
-                  }
+            if (this.auth.connected == false) {
+              this.api.presentToast('Impossible d’établir une connexion ', "danger");
+            } else {
+              this.api.loadingFn();
+              this.storage.get('AllReponsesON').then((val: any) => {
+                if (val) {
+                  val.forEach(element => {
+                    console.log('element.IdSite', element.IdSite)
+                    console.log('site.IdSite', site.IdSite)
+                    if (element.IdSite == site.IdSite) {
+                      this.Reponses.push(element)
+                    }
+                  });
+                }
+              }).then(d => {
+                let DataSite = { 'site': null, data: null }
+                DataSite.site = site;
+                DataSite.data = this.Reponses;
+                console.log('DataSite', DataSite)
+                this.api.SendData(DataSite, this.iduser).subscribe((data) => {
+                  console.log('DataSite', DataSite)
+                  this.api.dismissFn();
+                  this.deleteStorage(DataSite.site.IdSite, 'OnLine');
+                  this.api.presentToast('Operation effectuée avec succes', 'medium')
+                  this.Reponses = []
+                  DataSite = { 'site': null, data: null }
+                }, (err) => {
+                  console.log("error", err)
+                  this.api.dismissFn();
+                  this.api.presentToast('Erreur', 'danger')
+                  this.Reponses = []
+                  DataSite = { 'site': null, data: null }
                 });
-              }
-            }).then(d => {
-              this.api.SendData(this.Reponses, this.iduser).subscribe(data => {
-                console.log('data', data)
-                console.log('Reponses', this.Reponses)
-                this.api.dismissFn();
-                this.api.presentToast('Operation effectuée avec succes', 'medium')
-                this.Reponses = []
-
-              }), err => {
-                console.log("error", err)
-                this.api.dismissFn();
-                this.api.presentToast('Erreur', 'danger')
-                this.Reponses = []
-              }
-            }).catch(e => {
-              console.log("eeee", e)
-              this.api.dismissFn();
-              this.api.presentToast('Erreur', 'danger')
-            })
-
+              })
+            }
           }
         }
       ]
@@ -134,60 +138,90 @@ export class StoragePage implements OnInit {
   async ConfirmSupperssion(IdSite, mode) {
     console.log('AllSiteON', this.AllSiteON)
     const alert = await this.alertCtrl.create({
-      header: 'Confirm!',
+      header: 'Are you sure you want to delete!',
       buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
+
           }
         }, {
           text: 'Okay',
           handler: () => {
-            // console.log('mode', mode)
-            if (mode == "OnLine") {
-              this.api.loadingFn()
-              this.storage.get('AllSiteON').then((val: any) => {
+            console.log('IdSite', IdSite)
+            console.log('mode', mode)
+            this.deleteStorage(IdSite, mode)
 
-                val.forEach(element => {
-                  if (element.IdSite == IdSite) {
-                    const index = val.indexOf(element);
-                    if (index > -1) {
-                      val.splice(index, 1);
-                    }
-                  }
-                });
-                this.storage.set('AllSiteON', val).then(d => {
-                  this.api.dismissFn()
-                  this.StorageData()
-                })
-              })
-
-            } else {
-              this.api.loadingFn()
-              this.storage.get('AllSiteOff').then((val: any) => {
-                val.forEach(element => {
-                  if (element.IdSite == IdSite) {
-                    const index = val.indexOf(element);
-                    if (index > -1) {
-                      val.splice(index, 1);
-                    }
-                  }
-                })
-                this.storage.set('AllSiteOff', val).then(d => {
-                  this.api.dismissFn()
-                  this.StorageData()
-                })
-              })
-
-            }
           }
         }
       ]
     });
 
     await alert.present();
+  }
+  AllReponsesON = []
+  AllReponsesOff = []
+  deleteStorage(IdSite, mode) {
+    if (mode == "OnLine") {
+      this.api.loadingFn()
+      this.storage.get('AllReponsesON').then((val: any) => {
+        val.forEach(element => {
+          if (element.IdSite != IdSite) {
+            this.AllReponsesON.push(element);
+          }
+        });
+        console.log('AllReponsesON', this.AllReponsesON)
+        this.storage.set('AllReponsesON', this.AllReponsesON).then(d => {
+          this.AllReponsesON = []
+        })
+      })
+      this.storage.get('AllSiteON').then((val: any) => {
+
+        val.forEach(element => {
+          if (element.IdSite == IdSite) {
+            const index = val.indexOf(element);
+            if (index > -1) {
+              val.splice(index, 1);
+            }
+          }
+        });
+        this.storage.set('AllSiteON', val).then(d => {
+          this.api.dismissFn()
+          this.StorageData()
+        })
+      })
+
+    } else {
+      this.api.loadingFn()
+      this.storage.get('AllReponsesOff').then((val: any) => {
+        val.forEach(element => {
+          if (element.IdSite != IdSite) {
+            this.AllReponsesOff.push(element);
+          }
+        });
+        console.log('AllReponsesOff', this.AllReponsesOff)
+        this.storage.set('AllReponsesOff', this.AllReponsesOff).then(d => {
+          this.AllReponsesOff = []
+        })
+      })
+      this.storage.get('AllSiteOff').then((val: any) => {
+        val.forEach(element => {
+          if (element.IdSite == IdSite) {
+            const index = val.indexOf(element);
+            if (index > -1) {
+              val.splice(index, 1);
+            }
+          }
+        })
+        this.storage.set('AllSiteOff', val).then(d => {
+          this.api.dismissFn()
+          this.StorageData()
+        })
+      })
+
+    }
   }
 
   async ModifierNom(IdSite) {
@@ -209,28 +243,33 @@ export class StoragePage implements OnInit {
 
   Sites
   SendOffLine(idFichier, site) {
-    this.api.loadingFn()
-    this.api.ListSites(idFichier, this.iduser).then(d => {
-      let data = JSON.parse(d.data);
-      console.log("Sites", this.Sites);
-      this.Sites = data.site;
-      console.log("Sites", this.Sites);
-      this.api.dismissFn()
-      this.PresentAlert(site);
-    }).catch(e => {
-      console.log('erreur', e)
-      this.api.dismissFn()
-      this.api.presentToast('Erreur', 'danger')
-    })
+    if (this.auth.connected == false) {
+      this.api.presentToast('Impossible d’établir une connexion ', "danger");
+    } else {
+      this.api.loadingFn()
+      this.api.ListSites(idFichier, this.iduser).then(d => {
+        let data = JSON.parse(d.data);
+        console.log("Sites", this.Sites);
+        this.Sites = data.site;
+        console.log("Sites", this.Sites);
+        this.api.dismissFn()
+        this.PresentAlert(idFichier, site);
+      }).catch(e => {
+        console.log('erreur', e)
+        this.api.dismissFn()
+        this.api.presentToast('Erreur', 'danger')
+      })
+    }
+
   }
 
-  async PresentAlert(site) {
+  async PresentAlert(idFichier, site) {
     let inputs = []
     this.Sites.forEach(element => {
       inputs.push({
         type: "radio",
         label: element.name,
-        value: element.name,
+        value: element,
       })
     });
     let alert = await this.alertCtrl.create({
@@ -249,7 +288,7 @@ export class StoragePage implements OnInit {
           handler: (data) => {
             console.log('data', data)
             console.log('site.nom', site.nom)
-            if (data != site.nom) {
+            if (data.name != site.nom) {
               this.api.presentToast('Merci de vérifier le nom de site', 'danger')
             } else {
               this.api.loadingFn();
@@ -263,23 +302,33 @@ export class StoragePage implements OnInit {
                   });
                 }
               }).then(d => {
-                this.api.SendData(this.Reponses, this.iduser).subscribe(data => {
-                  console.log('data', data)
-                  console.log('Reponses', this.Reponses)
+                let idTicket
+                let DataSite = { 'site': null, data: null }
+                DataSite.site = site;
+                DataSite.data = this.Reponses;
+                data.noeudAcceptances.forEach(element => {
+                  if (element.fiche.id == idFichier) {
+                    console.log('ment.id', element.id)
+                    idTicket = element.id
+                  }
+                });
+                console.log('idTicket', idTicket)
+                DataSite.site.idTicket = idTicket
+                console.log('DataSite', DataSite)
+                this.api.SendData(DataSite, this.iduser).subscribe((data) => {
+                  console.log('DataSite', DataSite)
                   this.api.dismissFn();
+                  this.deleteStorage(DataSite.site.IdSite, 'OffLine');
                   this.api.presentToast('Operation effectuée avec succes', 'medium')
                   this.Reponses = []
-
-                }), err => {
+                  DataSite = { 'site': null, data: null }
+                }, (err) => {
                   console.log("error", err)
                   this.api.dismissFn();
                   this.api.presentToast('Erreur', 'danger')
                   this.Reponses = []
-                }
-              }).catch(e => {
-                console.log("eeee", e)
-                this.api.dismissFn();
-                this.api.presentToast('Erreur', 'danger')
+                  DataSite = { 'site': null, data: null }
+                });
               })
             }
 

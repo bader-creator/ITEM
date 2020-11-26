@@ -63,7 +63,6 @@ export class GoogleMapsPage implements OnInit {
 
     if (this.pos.lat && this.pos.lng) {
       const marker: Marker = this.map.addMarkerSync({
-        title: 'markerTitle',
         icon: 'red',
         animation: 'DROP',
         position: this.pos

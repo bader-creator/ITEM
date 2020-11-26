@@ -22,8 +22,8 @@
 </ion-header>
 
 <ion-content>
-
-    <!--_____________________________________________________________-->
+    <h5 *ngIf="ListesSite?.length == 0 " style="text-align: center; margin-top: 30%">No Information
+    </h5>
 
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
@@ -31,7 +31,7 @@
     </ion-refresher>
     <ion-searchbar *ngIf="isSearchbarOpened" showCancelButton="true" (ionInput)="getItems($event)" (ionCancel)="getItems($event)" (ionCancel)="isSearchbarOpened=false"></ion-searchbar>
     <ion-list>
-        <ion-item *ngFor="let site of ListesSite" (click)="GoesTODetail(site.id)">
+        <ion-item *ngFor="let site of ListesSite" [routerLink]="'/btsacceptance/' + site?.id" routerDirection="forward">
             <ion-icon name="radio" style="margin-bottom: -1px;
         margin-right: 7px;"></ion-icon>
             <ion-label style="font-size: 18px;">{{site.name}}</ion-label>
