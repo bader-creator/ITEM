@@ -77,6 +77,7 @@ export class AuthentificationService {
         this.storage.set('token', this.token);
         this.storage.set('currentUser', this.currentUser)
         this.listeFiches()
+        this.setTokenFireBase(this.currentUser.id,this.token)
         this.dismissFn();
         this.presentToast("Authentification effectuée avec succès", "success");
         this.nav.navigateForward(`/home`);
@@ -89,6 +90,23 @@ export class AuthentificationService {
 
 
 
+  }
+  setTokenFireBase(currentUser,token){  
+    
+    let data={id:currentUser,token:token}
+    console.log('data mobile',data)
+    this.http.post(`${environment.url2}/setTokenFireBase`,
+      data,
+      {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.getToken(),
+      }
+      ).then(d => {
+        let data = JSON.parse(d.data);
+        console.log('dataRepo,s*', data)
+      }).catch(e => {
+        console.log('erreur', e)
+      })
   }
 
   Listefiches

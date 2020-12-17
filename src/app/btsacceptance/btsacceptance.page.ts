@@ -4,6 +4,10 @@ import { RestApiService } from '../rest-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { environment } from '../../environments/environment';
+import { Platform } from '@ionic/angular';
+import { File } from '@ionic-native/File/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 @Component({
   selector: 'app-btsacceptance',
@@ -12,7 +16,10 @@ import { environment } from '../../environments/environment';
 })
 export class BTSAcceptancePage implements OnInit {
   env = environment.pathavatar;
-  constructor(private auth: AuthentificationService, private nav: NavController, private activatedRoute: ActivatedRoute, private api: RestApiService) { }
+  transfer: FileTransferObject;
+  constructor(private auth: AuthentificationService, private nav: NavController, private activatedRoute: ActivatedRoute, private api: RestApiService,
+    private platform: Platform, private file: File, private filetransfer: FileTransfer, private fileOpener: FileOpener
+  ) { }
   idSite
   ngOnInit() {
     this.idSite = this.activatedRoute.snapshot.paramMap.get('idSite')
@@ -22,6 +29,7 @@ export class BTSAcceptancePage implements OnInit {
 
   ionViewWillLeave() {
     this.api.dismissFn();
+    this.transfer=null
   }
 
   details
@@ -47,4 +55,18 @@ export class BTSAcceptancePage implements OnInit {
     console.log('longitude', longitude)
     this.nav.navigateRoot('/google-maps/' + latitude + '/' + longitude);
   }
+
+  downloadAndOpenPdf(id) {
+    this.api.loadingFn()
+    let downloadUrl = `${environment.url2}/export_pdf/` + id 
+    let path = this.file.dataDirectory;
+    this.transfer = this.filetransfer.create();  
+    this.transfer.download(downloadUrl, path + '.pdf').then(entry => {
+        let url = entry.toURL();
+          this.fileOpener.open(url, 'application/pdf')
+            .then(() => this.api.dismissFn())
+          .catch(e => this.api.dismissFn());
+  });
+
+}
 }

@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  url: 'http://192.168.11.85/it-m-master/public/api',
-  pathavatar: 'http://192.168.11.85/it-m-master/public/uploads/avatars/',
-  //pathfile: 'http://192.168.11.85/grh/web/uploads/Files',
 
+  url: 'http://192.168.11.85/it-m-masterxxx/it-m-master/public/api',
+  pathavatar: 'http://192.168.11.85/it-m-masterxxx/it-m-master/public//uploads/avatars/',
+  url2: 'http://192.168.11.85/it-m-masterxxx/it-m-master/public',
 };
 
 /*

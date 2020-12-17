@@ -35,8 +35,7 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    this.auth.login(this.data);
-  }
+    this.auth.login(this.data)  }
   Listefiches
   GoesTOuizz() {
     this.storage.get('Listefiches').then(async (val) => {
@@ -78,5 +77,6 @@ export class LoginPage implements OnInit {
     });
     alert.present();
   }
+
 
 }

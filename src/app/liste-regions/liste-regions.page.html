@@ -17,7 +17,7 @@
 
 <ion-content>
     <ion-list>
-        <ion-radio-group [(ngModel)]="regions">
+        <ion-radio-group>
             <ion-item *ngFor="let liste of ListesRegions" (click)="getListofRegion(liste.name,liste.id)">
                 <ion-icon slot="start" name="location" style="margin-right: 10px;margin-bottom: 16px;"></ion-icon>
                 <ion-label style="font-size: 18px;">{{liste.name}}</ion-label>

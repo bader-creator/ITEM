@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
-import { ListeFichierPage } from '../liste-fichier/liste-fichier.page';
 
 @NgModule({
   imports: [
@@ -16,7 +15,6 @@ import { ListeFichierPage } from '../liste-fichier/liste-fichier.page';
     IonicModule,
     LoginPageRoutingModule
   ],
-  declarations: [LoginPage, ListeFichierPage],
-  entryComponents: [ListeFichierPage],
+  declarations: [LoginPage]
 })
 export class LoginPageModule { }

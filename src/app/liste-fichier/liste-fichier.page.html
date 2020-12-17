@@ -15,7 +15,7 @@
 
 <ion-content>
     <ion-list>
-        <ion-radio-group [(ngModel)]="regions">
+        <ion-radio-group>
             <ion-item *ngFor="let liste of Listefiches" (click)="GoToQuizz(liste.id)" (click)="onDismiss()">
                 <ion-icon slot="start" name="document" style="margin-right: 10px;margin-bottom: 16px;"></ion-icon>
                 <ion-label style="font-size: 18px;">{{liste.label}}</ion-label>

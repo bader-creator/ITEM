@@ -18,15 +18,20 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { File } from '@ionic-native/File/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 import { GalleryNoeudPage } from './gallery-noeud/gallery-noeud.page'
 import { HttpClientModule } from '@angular/common/http';
+import { ListeFichierPage } from './liste-fichier/liste-fichier.page';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
 }
 @NgModule({
-  declarations: [AppComponent, GalleryNoeudPage],
-  entryComponents: [GalleryNoeudPage],
+  declarations: [AppComponent, GalleryNoeudPage, ListeFichierPage],
+  entryComponents: [GalleryNoeudPage, ListeFichierPage],
   imports: [BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
@@ -53,10 +58,14 @@ export function tokenGetter() {
     Geolocation,
     Storage,
     Base64,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FileChooser,
     FilePath,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    File,
     GoogleMaps,
+    FileTransfer,
+    FileOpener,
+    DocumentViewer,
   ],
   bootstrap: [AppComponent]
 })
