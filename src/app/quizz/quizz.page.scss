@@ -1,0 +1,45 @@
+ion-slides {
+    height: 100% !important;
+}
+
+label {
+    float: left;
+}
+
+.hide {
+    display: none;
+}
+
+.lengthSlide {
+    position: absolute;
+    bottom: 30px;
+    align-self: center;
+    font-family: "Roboto Condensed";
+    font-weight: 700;
+    line-height: 3px;
+    color: #2b2424bd;
+}
+
+ion-select {
+    border: 0.7px solid;
+    border-radius: 4px;
+}
+
+.champoblig {
+    font-size: 10px;
+    color: red;
+    float: left;
+    margin-top: -20px;
+}
+
+.SousFamille {
+    justify-content: center;
+    background-color: #4048C9;
+    height: 40px;
+}
+
+.SousFamille ion-label {
+    font-size: 16px;
+    margin-top: 8px;
+    color: white;
+}

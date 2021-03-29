@@ -1,0 +1,28 @@
+ion-content {
+    --background: ghostwhite;
+}
+
+ion-card-header {
+    background-color: #eae6e6;
+}
+
+ion-card {
+    margin-top: 20px;
+}
+
+ion-label {
+    color: black;
+    font-family: serif;
+    font-weight: 700;
+    line-height: 3px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.col-6 label {
+    font-size: 17px;
+    color: black;
+    margin-left: -36px;
+    display: inline-block;
+    word-break: break-word;
+}

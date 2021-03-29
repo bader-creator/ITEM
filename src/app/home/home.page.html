@@ -1,0 +1,92 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
+        font-weight: 700;
+        line-height: 58px;
+        text-align: center;margin-right: 50px;">
+            Accueil
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div class="banner" style="height: 30%;">
+        <!--image profil-->
+        <div class="profile">
+            <div class="content-profile">
+                <img src="{{env}}{{User?.path || 'empty.png'}}"
+                    class="profile-img shadow-lg img-fluid z-depth-1 rounded-circle">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="text-align: center;">
+        <div class="row align-content-center flex-wrap" style="height: 100%;padding-top: 60px;">
+            <div class="col-6">
+                <ion-card [routerLink]="'/storage'" routerDirection="forward">
+                    <ion-card-header>
+                        <ion-card-subtitle>
+                            <ion-icon name="archive"></ion-icon>
+                            <ng-container *ngIf='this?.StorageCount'>
+                                <ion-badge color="danger">{{this?.StorageCount}}</ion-badge>
+                            </ng-container>
+                        </ion-card-subtitle>
+                        <ion-card-title>Storage</ion-card-title>
+                    </ion-card-header>
+
+                    <ion-card-content>
+
+                    </ion-card-content>
+                </ion-card>
+
+            </div>
+            <div class="col-6">
+                <ion-card [routerLink]="'/audit'" routerDirection="forward">
+                    <ion-card-header>
+                        <ion-card-subtitle>
+                            <ion-icon name="newspaper"></ion-icon>
+                            <ng-container *ngIf='this?.AuditCount'>
+                                <ion-badge color="danger">{{this?.AuditCount}}</ion-badge>
+                            </ng-container>
+                        </ion-card-subtitle>
+                        <ion-card-title>Audit</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                    </ion-card-content>
+                </ion-card>
+            </div>
+
+            <div class="col-6">
+                <ion-card [routerLink]="'/noeud'" routerDirection="forward">
+                    <ion-card-header>
+                        <ion-card-subtitle>
+                            <ion-icon name="radio"></ion-icon>
+                        </ion-card-subtitle>
+                        <ion-card-title>Site</ion-card-title>
+                    </ion-card-header>
+
+                    <ion-card-content>
+
+                    </ion-card-content>
+                </ion-card>
+
+            </div>
+            <div class="col-6">
+                <ion-card (click)="this?.api?.presentConfirm()">
+                    <ion-card-header>
+                        <ion-card-subtitle>
+                            <ion-icon name="cart"></ion-icon>
+                        </ion-card-subtitle>
+                        <ion-card-title>Stock</ion-card-title>
+                    </ion-card-header>
+
+                    <ion-card-content>
+
+                    </ion-card-content>
+                </ion-card>
+            </div>
+        </div>
+    </div>
+</ion-content>

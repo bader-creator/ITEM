@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
+        font-weight: 700;
+        line-height: 58px;">
+            Gallery
+        </ion-title>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" (click)="onDismiss()" color="secondary">
+                <ion-icon slot="start" name="close-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card *ngFor="let image of images; let i = index;">
+        <ion-card-header color="secondary">
+            <button fill="solid" color="secondary" (click)="ConfirmSupperssion(i)">
+                    <ion-icon slot="start" name="trash"></ion-icon>
+                </button>
+            <ion-icon name="calendar" style="margin-bottom: -1px;"></ion-icon>
+            <ion-label style="margin-left: 5px;">{{image?.date | date: 'dd-MM-yyyy HH:mm'}}</ion-label>
+        </ion-card-header>
+        <ion-card-content>
+            <div class="banner">
+                <img [src]="image.imageData" class="img-responsive" style="height: 100%;width: 100%;" alt="img">
+            </div>
+        </ion-card-content>
+    </ion-card>
+
+
+</ion-content>

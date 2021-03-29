@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
+    font-weight: 700;
+    line-height: 58px;">Site</ion-title>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" (click)="GoesTOListeRegions()" color="secondary">
+                <ion-icon slot="start" name="filter"></ion-icon>
+            </ion-button>
+            <ion-button style="font-size: 18px;" *ngIf="!isSearchbarOpened" (click)="isSearchbarOpened=true">
+                <ion-icon slot="start" name="search"></ion-icon>
+            </ion-button>
+            <ion-button fill="solid" style="font-size: 18px;" [routerLink]="'/home'" routerDirection="forward"
+                color="secondary">
+                <ion-icon slot="start" name="home"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <h5 *ngIf="ListesSite?.length == 0 " style="text-align: center; margin-top: 30%">No Information
+    </h5>
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-searchbar *ngIf="isSearchbarOpened" showCancelButton="true" (ionInput)="getItems($event)"
+        (ionCancel)="getItems($event)" (ionCancel)="isSearchbarOpened=false"></ion-searchbar>
+    <ion-list>
+        <ion-card *ngFor="let site of ListesSite" [routerLink]="'/btsacceptance/' + site?.id" routerDirection="forward">
+            <ion-icon name="radio"></ion-icon>
+            <ion-label>{{site.name}}</ion-label>
+        </ion-card>
+    </ion-list>
+    <!--_____________________________________________________________-->
+</ion-content>

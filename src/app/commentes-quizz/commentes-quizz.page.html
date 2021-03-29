@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
+        font-weight: 700;
+        line-height: 58px;">
+            Comments
+        </ion-title>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" (click)="onDismiss()" color="secondary">
+                <ion-icon slot="start" name="close-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ng-container *ngFor="let comm of Allcomments;let i = index;">
+        <ng-container
+            *ngIf='this?.idQuestion==comm.idQuestion && this?.SousItemid==comm.SousItemid && this?.itemid==comm.itemid'>
+            <div class="msg_cotainer_send">
+                <ion-icon class="user_right" slot="start" name="close-circle" (click)="ConfirmSupperssion(i)">
+                </ion-icon>
+                <ion-label>{{comm.commentaire}}</ion-label>
+                <span class="msg_time_send">{{comm?.date | date: 'dd-MM-yyyy HH:mm'}}</span>
+            </div>
+        </ng-container>
+    </ng-container>
+</ion-content>
+<ion-footer class="footer">
+    <ion-item>
+        <textarea class="form-control type_msg" rows="1" placeholder="Envoyer un message" maxlength="500"
+            autocapitalize="on" autosize [(ngModel)]="comment.commentaire">
+    </textarea>
+        <ion-buttons slot="end" (click)="sendMessage()">
+            <ion-button class="input-group-text send_btn" id="submit">
+                <ion-icon name="send"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-item>
+</ion-footer>

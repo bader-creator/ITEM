@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title style="color:white;font-family: Roboto;
+    font-weight: 700;
+    line-height: 58px;
+    text-align: center;">Maps</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="secondary">
+      <ion-button fill="solid" style="font-size: 18px;" [routerLink]="'/home'" routerDirection="forward"
+        color="secondary">
+        <ion-icon slot="start" name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="mapId" style="width: 100%; height: 100%">
+  </div>
+</ion-content>

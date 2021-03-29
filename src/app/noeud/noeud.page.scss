@@ -1,0 +1,30 @@
+.fotter ion-label {
+    color: white;
+    font-family: "Roboto Condensed";
+    font-weight: 700;
+    line-height: 3px;
+    text-align: center;
+    font-size: 11px;
+  }
+  .haut ion-segment-button {
+    --color-checked: white;
+}
+
+ion-card{
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: .75rem;
+  padding: 15px;
+}
+ion-card ion-icon{
+  margin-bottom: -4px;
+  font-size: 22px;
+  color: black;;
+}
+ion-card ion-label{
+  color: black;
+  font-weight: 500;
+  font-size: 20px;
+  margin-top: 11px;
+  margin-left: 10px;
+}
