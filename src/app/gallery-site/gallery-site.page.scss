@@ -1,0 +1,14 @@
+.banner {
+    height: 260px;
+    position: relative;
+    z-index: 1;
+    background:  center center no-repeat;
+    background-size: cover;
+  }
+  ion-card-header button{
+    font-size: 22px;
+    float: right;
+    background-color: secondary;
+    background-color: #25368c;
+    color: white;margin-top: -5px;
+  }

@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
+        font-weight: 700;
+        line-height: 58px;
+        text-align: center; ">
+            Change Site Infos
+        </ion-title>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" (click)="onDismiss()" color="secondary">
+                <ion-icon slot="start" name="close-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="container-fluid" style="margin-top: 20px;">
+        <div class="form-group">
+            <label for="inputname">Site Name :</label>
+            <input class="form-control input-sm" [(ngModel)]="name">
+        </div>
+
+        <button type="button " class="btn btn-block" (click)="UpdateInfo()" style="background-color:#25368c ;">
+      <ion-label>Save</ion-label>
+    </button>
+    </div>
+
+
+</ion-content>

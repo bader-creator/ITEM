@@ -1,0 +1,212 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
+        font-weight: 700;
+        line-height: 58px;">
+            {{this?.title}}
+        </ion-title>
+        <ng-container *ngIf="this?.currentSlide == 0">
+            <ion-buttons slot="secondary">
+                <ion-button fill="solid" style="font-size: 18px;margin: -12px;" (click)="getCurrentCoordinates()"
+                    color="secondary">
+                    <ion-icon slot="start" name="location"></ion-icon>
+                </ion-button>
+                <ion-button fill="solid" style="font-size: 18px;" (click)="GoesToGallerySite()" color="secondary">
+                    <ion-icon slot="start" name="images"></ion-icon>
+                </ion-button>
+                <ion-button fill="solid" style="font-size: 18px;margin: -12px;" (click)="UplodeImageSite()"
+                    color="secondary">
+                    <ion-icon slot="start" name="camera"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ng-container>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" (click)="onDismiss()" color="secondary">
+                <ion-icon slot="start" name="close-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-slides pager="false" #Slides>
+        <ion-slide>
+            <ion-content>
+                <div class="container-fluid" style=" height: 100% !important;">
+                    <div class="form-group" style="margin-top: 35px;">
+                        <label for="inputname">Site ID :</label>
+                        <input class="form-control input-sm" [(ngModel)]="site.IdSite" name="site.IdSite">
+                        <ng-container *ngIf="!site.IdSite && verifeChamp">
+                            <br>
+                            <div class="champoblig">* Champ obligatoire </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputname">Site Name :</label>
+                        <input class="form-control input-sm" [(ngModel)]="site.nom" name="site.nom">
+                        <ng-container *ngIf="!site.nom && verifeChamp">
+                            <br>
+                            <div class="champoblig">* Champ obligatoire </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputname">Longitude :</label>
+                        <input type="number" class="form-control input-sm" [(ngModel)]="site.longitude"
+                            name="site.longitude" disabled>
+                        <ng-container *ngIf="!site.longitude && verifeChamp">
+                            <br>
+                            <div class="champoblig">* Champ obligatoire </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputname">Latitude :</label>
+                        <input type="number" class="form-control input-sm" [(ngModel)]="site.latitude"
+                            name="site.latitude" disabled>
+                        <ng-container *ngIf="!site.latitude && verifeChamp">
+                            <br>
+                            <div class="champoblig">* Champ obligatoire </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-slide>
+        <ion-slide *ngFor="let item of Fiches">
+            <ion-content>
+                <ion-card *ngFor="let SousItem of item.sousItems">
+                    <ion-row class="SousFamille">
+                        <ion-label>{{SousItem.label}}</ion-label>
+                    </ion-row>
+                    <ng-container *ngFor="let question of SousItem.questions; let i = index">
+                        <ion-card-header style="height: 53px;" style="background-color: #c0c3ef;">
+                            <div class="row">
+                                <div style="margin-left: 5px;">
+                                    <ng-container *ngIf='question.type==1'>
+                                        <!-- <ng-container *ngIf="this?.infodata && !this?.champObligatoire"> -->
+                                        <ion-icon name="happy" id="{{question.id}}happy{{item.id}}{{SousItem.id}}"
+                                            class="hide"
+                                            style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: rgb(83, 145, 83); ">
+                                        </ion-icon>
+                                        <!-- </ng-container> -->
+                                        <!-- <ng-container *ngIf="!this?.infodata && this?.champObligatoire"> -->
+                                        <ion-icon name="sad" id="{{question.id}}sad{{item.id}}{{SousItem.id}}"
+                                            style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: #a03434; ">
+                                        </ion-icon>
+                                        <!-- </ng-container> -->
+                                    </ng-container>
+                                    <ng-container *ngIf='question.type==0'>
+                                        <!-- <ng-container *ngIf="this?.infodata && !this?.champObligatoire"> -->
+                                        <ion-icon name="happy" id="{{question.id}}happy{{item.id}}{{SousItem.id}}"
+                                            class="hide"
+                                            style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: rgb(83, 145, 83); ">
+                                        </ion-icon>
+                                        <!-- </ng-container> -->
+                                        <!-- <ng-container *ngIf="!this?.infodata && this?.champObligatoire"> -->
+                                        <ion-icon name="sad" id="{{question.id}}sad{{item.id}}{{SousItem.id}}"
+                                            style="font-size: 18px;margin-bottom: -3px;margin-right: 5px;color: #a03434; ">
+                                        </ion-icon>
+                                        <!-- </ng-container> -->
+                                    </ng-container>
+
+
+
+                                    <ion-label *ngIf='question.criticity==0' style="font-size: 16px;color: black;">
+                                        Question {{i+1}} (Mineure)</ion-label>
+                                    <ion-label *ngIf='question.criticity==1' style="font-size: 16px;color: black;">
+                                        Question {{i+1}} (Majeure)</ion-label>
+                                    <ion-label *ngIf='question.criticity==2' style="font-size: 16px;color: black;">
+                                        Question {{i+1}} (Bloquante)</ion-label>
+
+                                </div>
+                                <div style="margin-top: -4px;">
+                                    <ion-buttons style="position: absolute; right: 14px;">
+                                        <ion-button style="font-size: 15px;margin: -12px;color: white;"
+                                            (click)="GoesTOCommentes(question.id,item.id,SousItem.id)">
+                                            <ion-icon name="chatbubble"></ion-icon>
+                                        </ion-button>
+                                        <ion-button style="font-size: 15px;color: white;"
+                                            (click)="GoesTOGallery(question.id,item.id,SousItem.id)">
+                                            <ion-icon name="images"></ion-icon>
+                                        </ion-button>
+                                        <ion-button style="font-size: 15px;margin: -12px;color: white;"
+                                            (click)="chargerImageCamera(question.id,item.id,SousItem.id)">
+                                            <ion-icon name="camera"></ion-icon>
+                                        </ion-button>
+                                    </ion-buttons>
+                                </div>
+                            </div>
+                        </ion-card-header>
+                        <ion-card-content>
+                            <p style="font-size: 17px;text-align: justify;margin-top: 18px;">
+                                {{question.label}}
+                            </p>
+                        </ion-card-content>
+                        <ion-row class="cardfooter">
+                            <div class="container-fluid">
+                                <ng-container *ngIf='question.type==0'>
+                                    <div class="form-group">
+                                        <ion-select (ionChange)="onSelectChange($event,question.id,item.id,SousItem.id)"
+                                            id="{{question.id}}ResponseSelect{{item.id}}{{SousItem.id}}">
+                                            <ion-select-option *ngFor='let c of question.choix' [value]="c?.id">
+                                                {{c.label}}</ion-select-option>
+                                        </ion-select>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf='question.type==1'>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control"
+                                            (keyup)="change($event,question.id,item.id,SousItem.id)"
+                                            id="{{question.id}}ResponseInput{{item.id}}{{SousItem.id}}">
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </ion-row>
+                    </ng-container>
+                </ion-card>
+            </ion-content>
+        </ion-slide>
+    </ion-slides>
+
+</ion-content>
+<ng-container *ngIf=' this?.allSlide '>
+    <ion-label class="lengthSlide">{{this?.currentSlide}} of {{this?.allSlide }} </ion-label>
+</ng-container>
+<ion-footer style="margin-top: 70px;" no-border>
+    <div class="row">
+
+        <ng-container *ngIf="this?.currentSlide != 0">
+            <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+                <ion-fab-button (click)="prev()" color="secondary">
+                    <ion-icon name="arrow-back-circle"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+        </ng-container>
+
+        <ng-container *ngIf="this?.currentSlide != this?.allSlide">
+            <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+                <ion-fab-button (click)="next()" color="secondary">
+                    <ion-icon name="arrow-forward-circle"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+        </ng-container>
+
+        <ng-container *ngIf="this?.currentSlide == this?.allSlide">
+            <ng-container *ngIf="this?.mode == 'OnLine'">
+                <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+                    <ion-fab-button (click)="SendResponse()" color="secondary ">
+                        <ion-icon name="checkmark-done"></ion-icon>
+                    </ion-fab-button>
+                </ion-fab>
+            </ng-container>
+            <ng-container *ngIf="this?.mode == 'OffLine'">
+                <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+                    <ion-fab-button (click)="SendResponseOffLine()" color="secondary ">
+                        <ion-icon name="checkmark-done"></ion-icon>
+                    </ion-fab-button>
+                </ion-fab>
+            </ng-container>
+        </ng-container>
+
+
+
+    </div>
+</ion-footer>

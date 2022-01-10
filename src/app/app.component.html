@@ -1,0 +1,63 @@
+<ion-app>
+    <ion-menu side="start" menuId="first" contentId="content1">
+        <ion-header>
+            <ion-toolbar color="secondary">
+                <ion-title style="color:white;font-family: Roboto;
+font-weight: 700;
+line-height: 58px;
+text-align: center;margin-left: 60px;">Bienvenue</ion-title>
+                <ion-buttons slot="secondary">
+                    <ion-button fill="solid" style="font-size: 18px;" (click)="logout()" color="secondary">
+                        <ion-icon slot="start" name="log-out"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+
+            <!--image profil-->
+            <div class="profile" style="margin: 45px;">
+                <div class="content-profile">
+                    <img src="{{env}}{{User?.path || 'empty.png'}}"
+                        class="profile-img shadow-lg img-fluid z-depth-1 rounded-circle">
+                </div>
+                <ion-label>{{this?.User?.lastName}} {{this?.User?.firstName}}</ion-label><br>
+                <ion-badge>{{this?.User?.job}}</ion-badge>
+            </div>
+
+            <ion-list style="padding-top: 50px;">
+                <ion-item [routerLink]="'/home'" routerDirection="forward" [class.activeItem]="isActive(1)"
+                    (click)="toggleMenu(1)">
+                    <ion-icon name="home"></ion-icon>
+                    <ion-label>Accueil
+                    </ion-label>
+                </ion-item>
+                <ion-item [routerLink]="'/storage'" routerDirection="forward" [class.activeItem]="isActive(2)"
+                    (click)="toggleMenu(2)">
+                    <ion-icon name="archive"></ion-icon>
+                    <ion-label>Storage
+                    </ion-label>
+                </ion-item>
+                <ion-item [routerLink]="'/audit'" routerDirection="forward" [class.activeItem]="isActive(3)"
+                    (click)="toggleMenu(3)">
+                    <ion-icon name="newspaper"></ion-icon>
+                    <ion-label>Audit
+                    </ion-label>
+                </ion-item>
+                <ion-item [routerLink]="'/noeud'" routerDirection="forward" [class.activeItem]="isActive(4)"
+                    (click)="toggleMenu(4)">
+                    <ion-icon name="radio"></ion-icon>
+                    <ion-label>Site
+                    </ion-label>
+                </ion-item>
+                <ion-item (click)="this?.api?.presentConfirm()" [class.activeItem]="isActive(5)"
+                    (click)="toggleMenu(5)">
+                    <ion-icon name="cart"></ion-icon>
+                    <ion-label>Stock
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="content1"></ion-router-outlet>
+</ion-app>

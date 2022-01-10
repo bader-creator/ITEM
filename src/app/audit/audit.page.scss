@@ -1,0 +1,20 @@
+ion-label {
+    color: black;
+    font-family: serif;
+    font-weight: 700;
+    line-height: 3px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.col-6 label {
+    font-size: 16px;
+    color: black;
+    margin-left: -46px;
+    display: inline-block;
+    word-break: break-word;
+}
+
+ion-card-header {
+    background-color: #eae6e6;
+}

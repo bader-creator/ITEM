@@ -1,0 +1,117 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
+    font-weight: 700;
+    line-height: 58px;
+    text-align: center;">Storage</ion-title>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" [routerLink]="'/home'" routerDirection="forward"
+                color="secondary">
+                <ion-icon slot="start" name="home"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <super-tabs>
+        <super-tabs-toolbar slot="top" style="background-color: #a0a6b9;">
+            <super-tab-button style="padding-bottom: 47px;">
+                <ion-label style="padding-top: 50px; color: white;font-size: 12.2px;">Mode online</ion-label>
+            </super-tab-button>
+            <super-tab-button style="padding-bottom: 47px;">
+                <ion-label style="padding-top: 50px;color: white;font-size: 12.2px;">Mode offline</ion-label>
+            </super-tab-button>
+        </super-tabs-toolbar>
+        <super-tabs-container>
+            <super-tab>
+                <h5 *ngIf="AllSiteON?.length == 0 " style="text-align: center; margin-top: 30%">No Information
+                </h5>
+                <ng-container *ngFor='let site of AllSiteON'>
+                    <ion-card>
+                        <ion-card-content>
+                            <div class="banner">
+                                <img [src]="site.image.image" class="img-responsive" style="height: 100%;width: 100%;"
+                                    alt="img">
+                            </div>
+                        </ion-card-content>
+                        <div class="row">
+                            <div class="col-8" style="padding-left: 31px;">
+                                <label>{{site.nom}}</label><br>
+                                <label>{{site.date | date: 'dd-MM-yyyy'}}</label>
+                            </div>
+                            <div class="col-4">
+                                <ion-buttons slot="secondary" style="float: right;margin: 7px;margin-right: 12px;">
+                                    <ion-button fill="solid" style="font-size: 18px;" color="light"
+                                        (click)="ConfirmSupperssion(site.IdSite,'OnLine')">
+                                        <ion-icon slot="end" name="trash" color="secondary"
+                                            style="margin-left: 0px;font-size: 26px;">
+                                        </ion-icon>
+                                    </ion-button>
+                                </ion-buttons>
+                            </div>
+                        </div>
+                        <ion-row class="cardfooter">
+                            <button type="button " class="btn btn-block" (click)="presentConfirm(site)"
+                                style="background-color:#25368c ;">
+                                <ion-label style="font-size: 15px;">Envoyer</ion-label>
+                            </button>
+                        </ion-row>
+                    </ion-card>
+                </ng-container>
+
+            </super-tab>
+            <super-tab>
+                <h5 *ngIf="AllSiteOff?.length == 0 " style="text-align: center; margin-top: 30%">No Information
+                </h5>
+                <ng-container *ngFor='let site of AllSiteOff'>
+                    <ion-card>
+                        <ion-card-content>
+                            <div class="banner">
+                                <img [src]="site.image.image" class="img-responsive" style="height: 100%;width: 100%;"
+                                    alt="img">
+                            </div>
+                        </ion-card-content>
+
+
+                        <div class="row">
+                            <div class="col-8" style="padding-left: 31px;">
+                                <label>{{site.nom}}</label><br>
+                                <label>{{site.date | date: 'dd-MM-yyyy'}}</label>
+                            </div>
+                            <div class="col-4">
+                                <ion-buttons slot="secondary" style="float: right;margin: 7px;margin-right: 12px;">
+                                    <ion-button fill="solid" style="font-size: 18px;" color="light"
+                                        (click)="ModifierNom(site.IdSite)">
+                                        <ion-icon slot="end" name="create" color="secondary"
+                                            style="margin-left: 0px;font-size: 26px;">
+                                        </ion-icon>
+                                    </ion-button>
+                                    <ion-button fill="solid" style="font-size: 18px;" color="light"
+                                        (click)="ConfirmSupperssion(site.IdSite,'OffLine')">
+                                        <ion-icon slot="end" name="trash" color="secondary"
+                                            style="margin-left: 0px;font-size: 26px;">
+                                        </ion-icon>
+                                    </ion-button>
+                                </ion-buttons>
+                            </div>
+                        </div>
+                        <ion-row class="cardfooter">
+                            <button type="button " class="btn btn-block" (click)="SendOffLine(site.idfichier,site)"
+                                style="background-color:#25368c ;">
+                                <ion-label style="font-size: 15px;">Envoyer</ion-label>
+                            </button>
+                        </ion-row>
+                    </ion-card>
+                </ng-container>
+
+
+            </super-tab>
+        </super-tabs-container>
+    </super-tabs>
+
+
+</ion-content>

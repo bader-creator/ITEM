@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
+        font-weight: 700;
+        line-height: 58px;
+        text-align: center; ">
+            Liste des Régions
+        </ion-title>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" (click)="onDismiss()" color="secondary">
+                <ion-icon slot="start" name="close-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-radio-group>
+            <ion-item *ngFor="let liste of ListesRegions" (click)="getListofRegion(liste.name,liste.id)">
+                <ion-icon slot="start" name="location" style="margin-right: 10px;margin-bottom: 16px;"></ion-icon>
+                <ion-label style="font-size: 18px;">{{liste.name}}</ion-label>
+                <ion-radio [value]="liste.id"></ion-radio>
+            </ion-item>
+        </ion-radio-group>
+    </ion-list>
+
+</ion-content>

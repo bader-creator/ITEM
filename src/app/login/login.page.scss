@@ -1,0 +1,36 @@
+.form-group input {
+    width: 100%;
+    padding: 25px;
+    border-radius: 30px;
+    padding-left: 46px;
+}
+
+.formButton button {
+    width: 100%;
+    border-radius: 30px;
+}
+
+.flex-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 220px;
+}
+
+.passwordIcon {
+    position: absolute;
+    right: 33px;
+    margin-top: -36px;
+    font-size: 23px;
+}
+
+//bienvenu
+.bienvenu {
+    text-align: center;
+    color: #0b1b68;
+    font-family: "Roboto Condensed";
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 77px;
+}

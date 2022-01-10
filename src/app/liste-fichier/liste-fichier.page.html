@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-title style="color:white;font-family: Roboto;
+      font-weight: 700;
+      line-height: 58px;">
+            Liste des fichiers
+        </ion-title>
+        <ion-buttons slot="secondary">
+            <ion-button fill="solid" style="font-size: 18px;" (click)="onDismiss()" color="secondary">
+                <ion-icon slot="start" name="close-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <h5 *ngIf="Listefiches?.length == 0 " style="text-align: center; margin-top: 30%">No Information
+    </h5>
+    <ion-list>
+        <ion-radio-group>
+            <ion-item *ngFor="let liste of Listefiches" (click)="GoToQuizz(liste.id)" (click)="onDismiss()">
+                <ion-icon slot="start" name="document" style="margin-right: 10px;margin-bottom: 16px;"></ion-icon>
+                <ion-label style="font-size: 18px;">{{liste.label}}</ion-label>
+                <ion-radio [value]="liste.id"></ion-radio>
+            </ion-item>
+        </ion-radio-group>
+    </ion-list>
+</ion-content>
